@@ -1,38 +1,38 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { 
-  Github, 
-  Linkedin, 
-  Mail, 
-  ExternalLink, 
-  Cpu, 
-  ShieldCheck, 
-  Code2, 
-  Terminal, 
-  ChevronRight, 
-  Sparkles, 
-  Menu, 
-  X, 
-  Send, 
-  Play, 
-  CheckCircle, 
-  TrendingUp, 
-  Bot, 
-  Video, 
-  Smartphone, 
-  Search, 
-  Lock, 
-  Volume2, 
-  Layers, 
-  Settings, 
-  Database, 
-  Calendar, 
-  DollarSign, 
-  BookOpen, 
-  Check, 
-  FileText, 
-  RefreshCw, 
-  Plus, 
+import {
+  Github,
+  Linkedin,
+  Mail,
+  ExternalLink,
+  Cpu,
+  ShieldCheck,
+  Code2,
+  Terminal,
+  ChevronRight,
+  Sparkles,
+  Menu,
+  X,
+  Send,
+  Play,
+  CheckCircle,
+  TrendingUp,
+  Bot,
+  Video,
+  Smartphone,
+  Search,
+  Lock,
+  Volume2,
+  Layers,
+  Settings,
+  Database,
+  Calendar,
+  DollarSign,
+  BookOpen,
+  Check,
+  FileText,
+  RefreshCw,
+  Plus,
   ArrowRight,
   GitBranch,
   Star,
@@ -43,7 +43,7 @@ import { SpotlightCard } from './components/SpotlightCard';
 
 const SectionHeader = ({ title, subtitle }: { title: string; subtitle?: string }) => (
   <div className="mb-12">
-    <motion.h2 
+    <motion.h2
       initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
@@ -52,7 +52,7 @@ const SectionHeader = ({ title, subtitle }: { title: string; subtitle?: string }
       {title}
     </motion.h2>
     {subtitle && (
-      <motion.p 
+      <motion.p
         initial={{ opacity: 0, y: 10 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
@@ -82,13 +82,13 @@ export default function App() {
   return (
     <div className="relative min-h-screen bg-[#050816] text-[#e2e8f0] overflow-x-hidden font-sans selection:bg-[#7C3AED]/30 selection:text-white">
       {/* Interactive Cyber halo gradient background */}
-      <div 
+      <div
         className="pointer-events-none fixed inset-0 z-30 transition-opacity duration-300 opacity-30 md:opacity-50"
         style={{
           background: `radial-gradient(600px circle at ${mousePosition.x}px ${mousePosition.y}px, rgba(124, 58, 237, 0.12), transparent 80%)`
         }}
       />
-      
+
       {/* Background static cosmic assets */}
       <div className="absolute top-0 left-0 w-full h-[500px] radial-glow pointer-events-none z-0" />
       <div className="absolute top-[30%] right-[-10%] w-[500px] h-[500px] radial-glow pointer-events-none z-0 opacity-40" />
@@ -96,7 +96,7 @@ export default function App() {
       {/* Modern Fixed Header */}
       <nav className="fixed top-0 w-full z-50 border-b border-white/5 bg-[#050816]/75 backdrop-blur-xl">
         <div className="max-w-7xl mx-auto px-6 h-18 flex items-center justify-between">
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
             className="flex items-center gap-3 font-mono font-bold tracking-tighter text-xl cursor-pointer"
@@ -125,7 +125,7 @@ export default function App() {
           </div>
 
           <div className="hidden md:flex items-center gap-4">
-            <a 
+            <a
               href="mailto:vivekdalvi5143@gmail.com"
               className="px-5 py-2 rounded-full border border-white/10 text-sm hover:border-[#7C3AED]/30 hover:bg-[#7C3AED]/10 text-slate-200 transition-all font-medium"
             >
@@ -133,8 +133,8 @@ export default function App() {
             </a>
           </div>
 
-          <button 
-            onClick={() => setMobileMenuOpen(!mobileMenuOpen)} 
+          <button
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             className="md:hidden p-2 text-gray-400 hover:text-white"
           >
             {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
@@ -145,7 +145,7 @@ export default function App() {
       {/* Mobile nav drawer */}
       <AnimatePresence>
         {mobileMenuOpen && (
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
@@ -156,7 +156,7 @@ export default function App() {
             <a href="#projects" onClick={() => setMobileMenuOpen(false)} className="text-xl text-gray-300 hover:text-[#7C3AED]">Selected Works</a>
             <a href="#experience" onClick={() => setMobileMenuOpen(false)} className="text-xl text-gray-300 hover:text-[#7C3AED]">Experience</a>
             <a href="#github-stats" onClick={() => setMobileMenuOpen(false)} className="text-xl text-gray-300 hover:text-[#7C3AED]">Activity</a>
-            <a 
+            <a
               href="mailto:vivekdalvi5143@gmail.com"
               className="py-3 text-center rounded-xl bg-gradient-to-r from-[#7C3AED] to-[#3B82F6] text-white font-semibold"
             >
@@ -167,11 +167,11 @@ export default function App() {
       </AnimatePresence>
 
       <main className="relative max-w-7xl mx-auto px-6 md:px-12 pt-36 pb-24 z-10 grid-bg">
-        
+
         {/* Section 1: Hero Section */}
         <section className="min-h-[85vh] flex flex-col justify-center mb-32 relative">
           <div className="grid lg:grid-cols-12 gap-12 items-center">
-            
+
             {/* Left side text core info */}
             <div className="lg:col-span-7 flex flex-col justify-center">
               <motion.div
@@ -183,34 +183,34 @@ export default function App() {
                   <Sparkles size={12} className="animate-pulse" />
                   <span>Available for AI Engineer & LLM Developer Roles</span>
                 </div>
-                
+
                 <h1 className="text-5xl md:text-7xl font-extrabold tracking-tighter leading-[1.05] mb-6 text-white font-sans">
                   Vivek Dalvi <br />
                   <span className="bg-clip-text text-transparent bg-gradient-to-r from-[#7C3AED] via-[#3B82F6] to-[#10B981]">
                     AI Engineer
 
-Building Agentic AI, RAG & LLM-Powered Applications
+                    Building Agentic AI, RAG & LLM-Powered Applications
                   </span>
                 </h1>
-                
+
                 <h3 className="text-xl md:text-2xl font-semibold text-gray-300 mb-6 font-sans">
                   Building Agentic AI, RAG & LLM-Powered Applications
                 </h3>
-                
+
                 <p className="text-base md:text-lg text-gray-400 max-w-2xl mb-10 leading-relaxed">
-                  Building production-grade intelligent systems that combine Generative AI, 
-                  Retrieval-Augmented Generation, autonomous agents, and modern software engineering 
+                  Building production-grade intelligent systems that combine Generative AI,
+                  Retrieval-Augmented Generation, autonomous agents, and modern software engineering
                   to solve real-world problems.
                 </p>
 
                 <div className="flex flex-wrap gap-4 mb-10">
-                  <a 
-                    href="#projects" 
+                  <a
+                    href="#projects"
                     className="px-8 py-4 bg-gradient-to-r from-[#7C3AED] to-[#3B82F6] text-white font-bold rounded-xl shadow-lg shadow-[#7C3AED]/20 hover:scale-[1.03] transition-all flex items-center gap-2 cursor-pointer"
                   >
                     View Projects <ChevronRight size={18} />
                   </a>
-                  <a 
+                  <a
                     href="https://drive.google.com/file/d/1UltzuS4Hg_R5iG88l78myh7F_EBaUViL/view?usp=sharing"
                     target="_blank"
                     rel="noopener noreferrer"
@@ -218,8 +218,8 @@ Building Agentic AI, RAG & LLM-Powered Applications
                   >
                     View Resume <FileText size={18} className="text-gray-400" />
                   </a>
-                  <a 
-                    href="#contact" 
+                  <a
+                    href="#contact"
                     className="px-6 py-4 border border-white/10 hover:border-[#7C3AED]/50 text-gray-300 hover:text-white font-semibold rounded-xl transition-all flex items-center gap-2"
                   >
                     Contact Me
@@ -246,7 +246,7 @@ Building Agentic AI, RAG & LLM-Powered Applications
 
             {/* Right side interactive animated blueprint element */}
             <div className="lg:col-span-5 h-[400px] md:h-[500px] relative flex justify-center items-center">
-              <SpotlightCard 
+              <SpotlightCard
                 initial={{ opacity: 0, scale: 0.9 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 1 }}
@@ -260,7 +260,7 @@ Building Agentic AI, RAG & LLM-Powered Applications
                   </div>
                   <span className="font-mono text-xs text-gray-500">agent_orchestrator_v2.py</span>
                 </div>
-                
+
                 {/* Visual rendering of active pipeline simulation */}
                 <div className="flex-1 flex flex-col justify-between py-2">
                   <div className="space-y-4">
@@ -273,7 +273,7 @@ Building Agentic AI, RAG & LLM-Powered Applications
                         <p className="text-sm font-semibold text-white">"Deploy an analytics agent with RAG fallback"</p>
                       </div>
                     </div>
-                    
+
                     <div className="h-[2px] bg-gradient-to-r from-transparent via-[#7C3AED]/30 to-transparent my-1" />
 
                     {/* Animated pipeline stages with light cues */}
@@ -297,7 +297,7 @@ Building Agentic AI, RAG & LLM-Powered Applications
                   {/* Neural Graph Visualisation overlay */}
                   <div className="relative h-28 glass-card border-dashed border-white/5 rounded-xl overflow-hidden p-3 flex justify-around items-center">
                     <div className="absolute inset-x-0 bottom-0 top-0 bg-gradient-to-t from-[#050816]/90 via-transparent" />
-                    
+
                     {/* Visual nodes representing AI system components */}
                     <div className="flex flex-col items-center gap-1">
                       <div className="p-2 rounded bg-[#7C3AED]/10 text-[#a78bfa] border border-[#7C3AED]/20 animate-bounce">
@@ -335,235 +335,235 @@ Building Agentic AI, RAG & LLM-Powered Applications
                 </div>
               </SpotlightCard>
             </div>
-            
+
           </div>
         </section>
 
         {/* Section 2: About Me Section */}
         <section id="about" className="mb-32 relative">
-  <SectionHeader title="About Me" subtitle="Who I Am" />
+          <SectionHeader title="About Me" subtitle="Who I Am" />
 
-  <div className="grid lg:grid-cols-12 gap-12 items-stretch">
+          <div className="grid lg:grid-cols-12 gap-12 items-stretch">
 
-    {/* Left Side */}
-    <div className="lg:col-span-7 flex flex-col justify-between">
-      <div className="space-y-6 text-gray-300 text-lg leading-relaxed">
-        <p>
-          I’m <span className="text-white font-semibold">Vivek Dalvi</span>, a Computer
-          Engineering graduate and AI Engineer passionate about building intelligent
-          systems using Generative AI, Machine Learning, and modern software
-          engineering to solve real-world problems.
-        </p>
+            {/* Left Side */}
+            <div className="lg:col-span-7 flex flex-col justify-between">
+              <div className="space-y-6 text-gray-300 text-lg leading-relaxed">
+                <p>
+                  I’m <span className="text-white font-semibold">Vivek Dalvi</span>, a Computer
+                  Engineering graduate and AI Engineer passionate about building intelligent
+                  systems using Generative AI, Machine Learning, and modern software
+                  engineering to solve real-world problems.
+                </p>
 
-        <p>
-          My journey has been driven by hands-on learning and continuous exploration
-          of emerging AI technologies. I have developed projects such as
-          <span className="text-white"> CampusPal</span>, an AI-powered campus assistant
-          powered by Retrieval-Augmented Generation (RAG),
-          <span className="text-white"> EduDiff</span>, which converts natural language
-          into educational animations,
-          <span className="text-white"> TransactAI</span>, a hybrid financial transaction
-          categorization platform, and
-          <span className="text-white"> InstaClaim</span>, a privacy-first offline
-          insurance claim assistant using OCR and local language models.
-        </p>
+                <p>
+                  My journey has been driven by hands-on learning and continuous exploration
+                  of emerging AI technologies. I have developed projects such as
+                  <span className="text-white"> CampusPal</span>, an AI-powered campus assistant
+                  powered by Retrieval-Augmented Generation (RAG),
+                  <span className="text-white"> EduDiff</span>, which converts natural language
+                  into educational animations,
+                  <span className="text-white"> TransactAI</span>, a hybrid financial transaction
+                  categorization platform, and
+                  <span className="text-white"> InstaClaim</span>, a privacy-first offline
+                  insurance claim assistant using OCR and local language models.
+                </p>
 
-        <p>
-          During my internship at <span className="text-white">Data Science Wizards
-          (DSW)</span>, I worked on secure PII detection and encryption pipelines,
-          enterprise backend systems, and AI-powered solutions that emphasized
-          privacy, scalability, and reliability.I enjoy building production-ready AI systems that combine
-          Generative AI, Retrieval-Augmented Generation, and intelligent
-          automation to solve practical business problems.
-        </p>
-      </div>
+                <p>
+                  During my internship at <span className="text-white">Data Science Wizards
+                    (DSW)</span>, I worked on secure PII detection and encryption pipelines,
+                  enterprise backend systems, and AI-powered solutions that emphasized
+                  privacy, scalability, and reliability.I enjoy building production-ready AI systems that combine
+                  Generative AI, Retrieval-Augmented Generation, and intelligent
+                  automation to solve practical business problems.
+                </p>
+              </div>
 
-      {/* Philosophy Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-8">
+              {/* Philosophy Cards */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-8">
 
-        <SpotlightCard
-          className="p-5 border-white/5"
-          glowColor="rgba(16,185,129,0.1)"
-          borderColor="rgba(16,185,129,0.2)"
-        >
-          <div className="flex items-center gap-3 mb-2">
-            <ShieldCheck className="text-emerald-400" size={18} />
-            <span className="text-sm font-semibold text-white">
-              Security & Privacy
-            </span>
-          </div>
+                <SpotlightCard
+                  className="p-5 border-white/5"
+                  glowColor="rgba(16,185,129,0.1)"
+                  borderColor="rgba(16,185,129,0.2)"
+                >
+                  <div className="flex items-center gap-3 mb-2">
+                    <ShieldCheck className="text-emerald-400" size={18} />
+                    <span className="text-sm font-semibold text-white">
+                      Security & Privacy
+                    </span>
+                  </div>
 
-          <p className="text-xs text-slate-400 leading-relaxed">
-            I believe trustworthy AI starts with secure design. My work focuses on
-            privacy-first architectures, responsible data handling, and building
-            systems that users can rely on.
-          </p>
-        </SpotlightCard>
+                  <p className="text-xs text-slate-400 leading-relaxed">
+                    I believe trustworthy AI starts with secure design. My work focuses on
+                    privacy-first architectures, responsible data handling, and building
+                    systems that users can rely on.
+                  </p>
+                </SpotlightCard>
 
-        <SpotlightCard
-          className="p-5 border-white/5"
-          glowColor="rgba(124,58,237,0.1)"
-          borderColor="rgba(124,58,237,0.2)"
-        >
-          <div className="flex items-center gap-3 mb-2">
-            <Cpu className="text-purple-400" size={18} />
-            <span className="text-sm font-semibold text-white">
-              Engineering Philosophy
-            </span>
-          </div>
+                <SpotlightCard
+                  className="p-5 border-white/5"
+                  glowColor="rgba(124,58,237,0.1)"
+                  borderColor="rgba(124,58,237,0.2)"
+                >
+                  <div className="flex items-center gap-3 mb-2">
+                    <Cpu className="text-purple-400" size={18} />
+                    <span className="text-sm font-semibold text-white">
+                      Engineering Philosophy
+                    </span>
+                  </div>
 
-          <p className="text-xs text-slate-400 leading-relaxed">
-            I enjoy building AI systems that retrieve relevant information,
-            automate workflows, and deliver practical solutions with reliability,
-            scalability, and real-world impact.
-          </p>
-        </SpotlightCard>
+                  <p className="text-xs text-slate-400 leading-relaxed">
+                    I enjoy building AI systems that retrieve relevant information,
+                    automate workflows, and deliver practical solutions with reliability,
+                    scalability, and real-world impact.
+                  </p>
+                </SpotlightCard>
 
-      </div>
-    </div>
-
-    {/* Right Side Timeline */}
-
-    <div className="lg:col-span-5 flex flex-col justify-center">
-      <SpotlightCard
-        className="p-8 border-white/10 space-y-8 flex-1 flex flex-col justify-around"
-        glowColor="rgba(59,130,246,0.1)"
-        borderColor="rgba(59,130,246,0.2)"
-      >
-        <h3 className="font-bold text-white text-xl font-sans border-b border-white/5 pb-4">
-          Education & Experience
-        </h3>
-
-        <div className="space-y-6">
-
-          <div className="flex gap-4">
-            <div className="shrink-0 w-8 h-8 rounded-full bg-[#7C3AED]/20 border border-[#7C3AED]/30 flex items-center justify-center text-[#a78bfa] font-mono text-xs font-bold">
-              01
+              </div>
             </div>
 
-            <div>
-              <h4 className="font-semibold text-white">
-                A.P. Shah Institute of Technology
-              </h4>
+            {/* Right Side Timeline */}
 
-              <p className="text-xs text-gray-400 font-mono">
-                Bachelor of Engineering (B.E.)
-                Computer Science Engineering
-                Specialization in Artificial Intelligence & Machine Learning
-              </p>
+            <div className="lg:col-span-5 flex flex-col justify-center">
+              <SpotlightCard
+                className="p-8 border-white/10 space-y-8 flex-1 flex flex-col justify-around"
+                glowColor="rgba(59,130,246,0.1)"
+                borderColor="rgba(59,130,246,0.2)"
+              >
+                <h3 className="font-bold text-white text-xl font-sans border-b border-white/5 pb-4">
+                  Education & Experience
+                </h3>
 
-              <p className="text-sm text-slate-300 mt-1">
-                CGPA:
-                <span className="text-[#10B981] font-bold"> 8.54 / 10</span>
-              </p>
+                <div className="space-y-6">
+
+                  <div className="flex gap-4">
+                    <div className="shrink-0 w-8 h-8 rounded-full bg-[#7C3AED]/20 border border-[#7C3AED]/30 flex items-center justify-center text-[#a78bfa] font-mono text-xs font-bold">
+                      01
+                    </div>
+
+                    <div>
+                      <h4 className="font-semibold text-white">
+                        A.P. Shah Institute of Technology
+                      </h4>
+
+                      <p className="text-xs text-gray-400 font-mono">
+                        Bachelor of Engineering (B.E.)
+                        Computer Science Engineering
+                        Specialization in Artificial Intelligence & Machine Learning
+                      </p>
+
+                      <p className="text-sm text-slate-300 mt-1">
+                        CGPA:
+                        <span className="text-[#10B981] font-bold"> 8.54 / 10</span>
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className="flex gap-4">
+                    <div className="shrink-0 w-8 h-8 rounded-full bg-[#3B82F6]/20 border border-[#3B82F6]/30 flex items-center justify-center text-[#60a5fa] font-mono text-xs font-bold">
+                      02
+                    </div>
+
+                    <div>
+                      <h4 className="font-semibold text-white">
+                        Honors in Cyber Security
+                      </h4>
+
+                      <p className="text-xs text-gray-400 font-mono">
+                        A.P. Shah Institute of Technology
+                      </p>
+
+                      <p className="text-sm text-slate-300 mt-1">
+                        Strengthened my understanding of cybersecurity principles,
+                        privacy-focused system design, and secure software development.
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className="flex gap-4">
+                    <div className="shrink-0 w-8 h-8 rounded-full bg-[#10B981]/20 border border-[#10B981]/30 flex items-center justify-center text-[#34d399] font-mono text-xs font-bold">
+                      03
+                    </div>
+
+                    <div>
+                      <h4 className="font-semibold text-white">
+                        Data Science Engineer Intern
+                      </h4>
+
+                      <p className="text-xs text-gray-400 font-mono">
+                        Data Science Wizards • Aug 2025 – Feb 2026
+                      </p>
+
+                      <p className="text-sm text-slate-300 mt-1">
+                        Worked on enterprise AI solutions, PII detection and encryption
+                        pipelines using Microsoft Presidio, and scalable backend systems
+                        for production environments.
+                      </p>
+                    </div>
+                  </div>
+
+                </div>
+
+                <div className="pt-4 border-t border-white/5 flex items-center gap-8 text-slate-300 font-mono text-xs">
+
+                  <div>
+                    <span className="block text-xl font-bold text-white">7+</span>
+                    <span className="text-gray-500 text-[10px]">
+                      AI Projects Built
+                    </span>
+                  </div>
+
+                  <div className="h-8 w-[1px] bg-white/5" />
+
+                  <div>
+                    <span className="block text-xl font-bold text-white">1</span>
+                    <span className="text-gray-500 text-[10px]">
+                      Industry Internship
+                    </span>
+                  </div>
+
+                  <div className="h-8 w-[1px] bg-white/5" />
+
+                  <div>
+                    <span className="block text-xl font-bold text-white">8.54</span>
+                    <span className="text-gray-500 text-[10px]">
+                      CGPA
+                    </span>
+                  </div>
+
+                </div>
+              </SpotlightCard>
             </div>
+
           </div>
-
-          <div className="flex gap-4">
-            <div className="shrink-0 w-8 h-8 rounded-full bg-[#3B82F6]/20 border border-[#3B82F6]/30 flex items-center justify-center text-[#60a5fa] font-mono text-xs font-bold">
-              02
-            </div>
-
-            <div>
-              <h4 className="font-semibold text-white">
-                Honors in Cyber Security
-              </h4>
-
-              <p className="text-xs text-gray-400 font-mono">
-                A.P. Shah Institute of Technology
-              </p>
-
-              <p className="text-sm text-slate-300 mt-1">
-                Strengthened my understanding of cybersecurity principles,
-                privacy-focused system design, and secure software development.
-              </p>
-            </div>
-          </div>
-
-          <div className="flex gap-4">
-            <div className="shrink-0 w-8 h-8 rounded-full bg-[#10B981]/20 border border-[#10B981]/30 flex items-center justify-center text-[#34d399] font-mono text-xs font-bold">
-              03
-            </div>
-
-            <div>
-              <h4 className="font-semibold text-white">
-                Data Science Engineer Intern
-              </h4>
-
-              <p className="text-xs text-gray-400 font-mono">
-                Data Science Wizards • Aug 2025 – Feb 2026
-              </p>
-
-              <p className="text-sm text-slate-300 mt-1">
-                Worked on enterprise AI solutions, PII detection and encryption
-                pipelines using Microsoft Presidio, and scalable backend systems
-                for production environments.
-              </p>
-            </div>
-          </div>
-
-        </div>
-
-        <div className="pt-4 border-t border-white/5 flex items-center gap-8 text-slate-300 font-mono text-xs">
-
-          <div>
-            <span className="block text-xl font-bold text-white">7+</span>
-            <span className="text-gray-500 text-[10px]">
-              AI Projects Built
-            </span>
-          </div>
-
-          <div className="h-8 w-[1px] bg-white/5" />
-
-          <div>
-            <span className="block text-xl font-bold text-white">1</span>
-            <span className="text-gray-500 text-[10px]">
-              Industry Internship
-            </span>
-          </div>
-
-          <div className="h-8 w-[1px] bg-white/5" />
-
-          <div>
-            <span className="block text-xl font-bold text-white">8.54</span>
-            <span className="text-gray-500 text-[10px]">
-              CGPA
-            </span>
-          </div>
-
-        </div>
-      </SpotlightCard>
-    </div>
-
-  </div>
-</section>
+        </section>
 
 
         {/* Section 3: Tech Stack Bento Grid */}
         <section id="skills" className="mb-32 relative">
           <SectionHeader title="Technical Bento Grid" subtitle="Engineering Stack" />
-          
+
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {SKILLS.map((category, idx) => (
-              <SpotlightCard 
+              <SpotlightCard
                 key={category.title}
                 initial={{ opacity: 0, scale: 0.96 }}
                 whileInView={{ opacity: 1, scale: 1 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.5, delay: idx * 0.1 }}
                 glowColor={
-                  idx % 3 === 0 
-                    ? "rgba(16, 185, 129, 0.1)" 
-                    : idx % 3 === 1 
-                    ? "rgba(124, 58, 237, 0.1)" 
-                    : "rgba(59, 130, 246, 0.1)"
+                  idx % 3 === 0
+                    ? "rgba(16, 185, 129, 0.1)"
+                    : idx % 3 === 1
+                      ? "rgba(124, 58, 237, 0.1)"
+                      : "rgba(59, 130, 246, 0.1)"
                 }
                 borderColor={
-                  idx % 3 === 0 
-                    ? "rgba(16, 185, 129, 0.25)" 
-                    : idx % 3 === 1 
-                    ? "rgba(124, 58, 237, 0.25)" 
-                    : "rgba(59, 130, 246, 0.25)"
+                  idx % 3 === 0
+                    ? "rgba(16, 185, 129, 0.25)"
+                    : idx % 3 === 1
+                      ? "rgba(124, 58, 237, 0.25)"
+                      : "rgba(59, 130, 246, 0.25)"
                 }
                 className="p-6 flex flex-col justify-between h-full"
               >
@@ -571,11 +571,11 @@ Building Agentic AI, RAG & LLM-Powered Applications
                   <div className="flex items-center justify-between border-b border-white/5 pb-4 mb-6">
                     <h3 className="text-[#a78bfa] font-mono text-xs uppercase tracking-widest">{category.title}</h3>
                   </div>
-                  
+
                   <div className="flex flex-wrap gap-2.5">
                     {category.skills.map((skill, sIdx) => (
-                      <span 
-                        key={skill} 
+                      <span
+                        key={skill}
                         className="px-3.5 py-1.5 bg-white/5 border border-white/10 rounded-xl text-xs font-mono text-gray-300 hover:text-white hover:bg-white/10 hover:border-[#7C3AED]/40 transition-colors duration-200"
                       >
                         {skill}
@@ -583,7 +583,7 @@ Building Agentic AI, RAG & LLM-Powered Applications
                     ))}
                   </div>
                 </div>
-                
+
 
               </SpotlightCard>
             ))}
@@ -593,12 +593,12 @@ Building Agentic AI, RAG & LLM-Powered Applications
         {/* Section 4: Featured Works (Selected Projects alternate layouts) */}
         <section id="projects" className="mb-32">
           <SectionHeader title="Selected Works" subtitle="Operational Pipelines" />
-          
+
           <div className="space-y-24">
             {PROJECTS.map((project, idx) => {
               const isEven = idx % 2 === 0;
               return (
-                <div 
+                <div
                   key={project.title}
                   className="group relative grid lg:grid-cols-12 gap-12 items-start"
                 >
@@ -609,10 +609,10 @@ Building Agentic AI, RAG & LLM-Powered Applications
                         {project.title}
                       </h3>
                       {project.link && (
-                        <a 
-                          href={project.link} 
-                          target="_blank" 
-                          rel="noopener noreferrer" 
+                        <a
+                          href={project.link}
+                          target="_blank"
+                          rel="noopener noreferrer"
                           className="text-gray-500 hover:text-[#7C3AED] transition-colors self-center inline-block p-1.5 rounded-lg bg-white/5"
                           title="View Repository"
                         >
@@ -620,7 +620,7 @@ Building Agentic AI, RAG & LLM-Powered Applications
                         </a>
                       )}
                     </div>
-                    
+
                     <p className="text-gray-300 mb-6 text-base leading-relaxed font-sans">
                       {project.description}
                     </p>
@@ -645,28 +645,28 @@ Building Agentic AI, RAG & LLM-Powered Applications
 
                   {/* Right-Left Interactive Simulation Widget */}
                   <div className={`lg:col-span-6 ${isEven ? 'lg:order-2' : 'lg:order-1'}`}>
-                    <SpotlightCard 
+                    <SpotlightCard
                       className="h-[380px] p-5 shadow-2xl flex flex-col justify-between"
                       glowColor={
                         project.title === 'CampusPal' ? 'rgba(16, 185, 129, 0.12)' :
-                        project.title === 'EduDiff' ? 'rgba(124, 58, 237, 0.12)' :
-                        project.title === 'TransactAI' ? 'rgba(59, 130, 246, 0.12)' :
-                        project.title === 'InstaClaim' ? 'rgba(245, 158, 11, 0.12)' :
-                        project.title === 'Multi-Agent Platform' ? 'rgba(236, 72, 153, 0.12)' :
-                        project.title === 'Daily-Work-Logger' ? 'rgba(6, 182, 212, 0.12)' :
-                        'rgba(249, 115, 22, 0.12)'
+                          project.title === 'EduDiff' ? 'rgba(124, 58, 237, 0.12)' :
+                            project.title === 'TransactAI' ? 'rgba(59, 130, 246, 0.12)' :
+                              project.title === 'InstaClaim' ? 'rgba(245, 158, 11, 0.12)' :
+                                project.title === 'Multi-Agent Platform' ? 'rgba(236, 72, 153, 0.12)' :
+                                  project.title === 'Daily-Work-Logger' ? 'rgba(6, 182, 212, 0.12)' :
+                                    'rgba(249, 115, 22, 0.12)'
                       }
                       borderColor={
                         project.title === 'CampusPal' ? 'rgba(16, 185, 129, 0.25)' :
-                        project.title === 'EduDiff' ? 'rgba(124, 58, 237, 0.25)' :
-                        project.title === 'TransactAI' ? 'rgba(59, 130, 246, 0.25)' :
-                        project.title === 'InstaClaim' ? 'rgba(245, 158, 11, 0.25)' :
-                        project.title === 'Multi-Agent Platform' ? 'rgba(236, 72, 153, 0.25)' :
-                        project.title === 'Daily-Work-Logger' ? 'rgba(6, 182, 212, 0.25)' :
-                        'rgba(249, 115, 22, 0.25)'
+                          project.title === 'EduDiff' ? 'rgba(124, 58, 237, 0.25)' :
+                            project.title === 'TransactAI' ? 'rgba(59, 130, 246, 0.25)' :
+                              project.title === 'InstaClaim' ? 'rgba(245, 158, 11, 0.25)' :
+                                project.title === 'Multi-Agent Platform' ? 'rgba(236, 72, 153, 0.25)' :
+                                  project.title === 'Daily-Work-Logger' ? 'rgba(6, 182, 212, 0.25)' :
+                                    'rgba(249, 115, 22, 0.25)'
                       }
                     >
-                      
+
                       {/* Sub-Widget: Dynamic Interactive Simulations */}
                       {project.title === 'CampusPal' && <CampusPalWidget />}
                       {project.title === 'EduDiff' && <EduDiffWidget />}
@@ -691,13 +691,13 @@ Building Agentic AI, RAG & LLM-Powered Applications
 
           <div className="max-w-4xl mx-auto space-y-12">
             {EXPERIENCES.map((exp, idx) => (
-              <div 
-                key={exp.company} 
+              <div
+                key={exp.company}
                 className="relative pl-8 md:pl-12 border-l border-white/10 group pb-4"
               >
                 {/* Glowing target point */}
                 <div className="absolute left-[-5px] top-0.5 w-2.5 h-2.5 rounded-full bg-[#7C3AED] shadow-[0_0_12px_#7c3aed]" />
-                
+
                 <div className="flex flex-col md:flex-row md:items-center justify-between gap-2 mb-6">
                   <div>
                     <h3 className="text-2xl font-extrabold text-white group-hover:text-[#7C3AED] transition-colors">{exp.company}</h3>
@@ -727,7 +727,7 @@ Building Agentic AI, RAG & LLM-Powered Applications
         {/* Section 6: Simulated GitHub Stats Dashboard (Activity Graph) */}
         <section id="github-stats" className="mb-32 relative">
           <SectionHeader title="Developer Analytics" subtitle="Contributions & Activity Track" />
-          
+
           <SpotlightCard className="p-8 border-white/10 rounded-[24px]" glowColor="rgba(16, 185, 129, 0.12)" borderColor="rgba(16, 185, 129, 0.25)">
             <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-6 pb-6 border-b border-white/5 mb-8">
               <div className="flex items-center gap-4">
@@ -737,7 +737,7 @@ Building Agentic AI, RAG & LLM-Powered Applications
                   <p className="text-xs text-gray-500 font-mono">Aggregated daily production git events</p>
                 </div>
               </div>
-              
+
               <div className="flex items-center gap-6">
                 <div className="text-center font-mono">
                   <span className="block text-2xl font-bold text-[#10B981]">1,480+</span>
@@ -758,20 +758,20 @@ Building Agentic AI, RAG & LLM-Powered Applications
                   <span>Commit Calendar Heatmap 2026</span>
                   <span className="text-gray-600">Legend: Less • ● ● ● ● • More</span>
                 </p>
-                
+
                 {/* Simulated SVG Grid Squares of contributions */}
                 <div className="grid grid-cols-12 md:grid-cols-24 gap-1.5 h-20">
                   {Array.from({ length: 48 }).map((_, idx) => {
                     const contributionWeights = [
-                      'bg-white/5', 'bg-[#7C3AED]/20', 'bg-[#7C3AED]/40', 
+                      'bg-white/5', 'bg-[#7C3AED]/20', 'bg-[#7C3AED]/40',
                       'bg-[#3B82F6]/30', 'bg-[#10B981]/50', 'bg-[#10B981]/80'
                     ];
                     const weightIndex = Math.floor(Math.sin(idx / 2 + 1) * 2.5 + 3) % contributionWeights.length;
                     return (
-                      <div 
-                        key={idx} 
+                      <div
+                        key={idx}
                         className={`w-full rounded-md aspect-square ${contributionWeights[weightIndex]} border border-white/5 hover:border-white/20 transition-all cursor-pointer`}
-                        title={`Activity weight: ${weightIndex}`} 
+                        title={`Activity weight: ${weightIndex}`}
                       />
                     );
                   })}
@@ -784,30 +784,18 @@ Building Agentic AI, RAG & LLM-Powered Applications
                   <span className="text-[10px] uppercase text-[#7C3AED]">Featured Repository</span>
                   <h4 className="font-semibold text-white">CampusPal</h4>
                   <p className="text-slate-400 text-[11px]">RAG system optimized to fetch academic documents instantly.</p>
-                  <div className="flex justify-between items-center text-slate-500 text-[10px]">
-                    <span className="flex items-center gap-1"><Star size={10} /> 48 Stars</span>
-                    <span className="flex items-center gap-1"><GitBranch size={10} /> 12 Forks</span>
-                  </div>
                 </div>
 
                 <div className="p-4 bg-white/5 rounded-xl border border-white/5 space-y-2">
                   <span className="text-[10px] uppercase text-[#3B82F6]">Recent Build</span>
                   <h4 className="font-semibold text-white">EduDiff</h4>
                   <p className="text-slate-400 text-[11px]">Gemini 2.5 Flash Manim render workflow with secure Docker instances.</p>
-                  <div className="flex justify-between items-center text-slate-500 text-[10px]">
-                    <span className="flex items-center gap-1"><Star size={10} /> 36 Stars</span>
-                    <span className="flex items-center gap-1"><GitBranch size={10} /> 8 Forks</span>
-                  </div>
                 </div>
 
                 <div className="p-4 bg-white/5 rounded-xl border border-white/5 space-y-2">
                   <span className="text-[10px] uppercase text-[#10B981]">FinTech module</span>
                   <h4 className="font-semibold text-white">TransactAI</h4>
                   <p className="text-slate-400 text-[11px]">DistilBERT classification engine for offline SMS payment tagging.</p>
-                  <div className="flex justify-between items-center text-slate-500 text-[10px]">
-                    <span className="flex items-center gap-1"><Star size={10} /> 54 Stars</span>
-                    <span className="flex items-center gap-1"><GitBranch size={10} /> 15 Forks</span>
-                  </div>
                 </div>
               </div>
             </div>
@@ -828,7 +816,7 @@ Building Agentic AI, RAG & LLM-Powered Applications
             </div>
 
             <div className="flex justify-center">
-              <a 
+              <a
                 href="mailto:vivekdalvi5143@gmail.com"
                 className="px-8 py-5 rounded-2xl bg-gradient-to-r from-[#7C3AED] to-[#3B82F6] text-white font-extrabold text-lg shadow-xl hover:scale-[1.04] transition-all flex items-center gap-3 animate-pulse"
               >
@@ -880,16 +868,16 @@ Building Agentic AI, RAG & LLM-Powered Applications
 // Custom simple LoaderIcon
 function LoaderIcon({ className, size = 12 }: { className?: string; size?: number }) {
   return (
-    <svg 
-      className={className} 
-      xmlns="http://www.w3.org/2000/svg" 
-      width={size} 
-      height={size} 
-      viewBox="0 0 24 24" 
-      fill="none" 
-      stroke="currentColor" 
-      strokeWidth="2" 
-      strokeLinecap="round" 
+    <svg
+      className={className}
+      xmlns="http://www.w3.org/2000/svg"
+      width={size}
+      height={size}
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
       strokeLinejoin="round"
     >
       <path d="M21 12a9 9 0 1 1-6.219-8.56" />
@@ -921,7 +909,7 @@ function CampusPalWidget() {
     if (pipelineState !== 'idle') return;
     setInputText('');
     setMessages(prev => [...prev, { sender: 'user', text: query }]);
-    
+
     // Simulate RAG pipeline step by step
     setPipelineState('routing');
     setTimeout(() => {
@@ -958,9 +946,9 @@ function CampusPalWidget() {
       {/* RAG pipeline processing ribbon active status feedback */}
       <AnimatePresence>
         {pipelineState !== 'idle' && (
-          <motion.div 
-            initial={{ opacity: 0, y: -10 }} 
-            animate={{ opacity: 1, y: 0 }} 
+          <motion.div
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -10 }}
             className="px-3 py-1.5 rounded-lg bg-[#3B82F6]/10 text-[#3B82F6] text-[10px] font-mono flex items-center justify-between border border-[#3B82F6]/20 mb-2"
           >
@@ -981,7 +969,7 @@ function CampusPalWidget() {
             <span className="text-[9px] text-gray-500 mb-1 font-mono">{m.sender === 'user' ? 'YOU' : 'CampusPal Agent'}</span>
             <div className={`p-3 rounded-2xl max-w-[85%] text-xs leading-relaxed font-sans ${m.sender === 'user' ? 'bg-[#7C3AED]/20 text-[#e9d5ff] rounded-tr-none' : 'bg-white/5 text-slate-300 rounded-tl-none'}`}>
               <p>{m.text}</p>
-              
+
               {m.sources && m.sources.length > 0 && (
                 <div className="mt-2 pt-2 border-t border-white/5 flex flex-wrap gap-1.5 items-center">
                   <span className="text-[8px] font-mono text-[#10B981] font-semibold uppercase">Sources extracted:</span>
@@ -999,8 +987,8 @@ function CampusPalWidget() {
       <div className="mt-3 space-y-2">
         <div className="flex gap-1.5 overflow-x-auto py-1">
           {presetQuestions.map(q => (
-            <button 
-              key={q} 
+            <button
+              key={q}
               disabled={pipelineState !== 'idle'}
               onClick={() => handleTriggerQuery(q)}
               className="px-2.5 py-1 text-[9px] font-sans bg-white/5 border border-white/10 hover:border-[#3B82F6]/30 hover:bg-white/10 rounded-full text-slate-300 transition-all shrink-0 cursor-pointer disabled:opacity-50"
@@ -1092,14 +1080,14 @@ function EduDiffWidget() {
 
       {/* Button workflow actions */}
       <div className="mt-4 flex gap-3 items-center">
-        <input 
-          type="text" 
+        <input
+          type="text"
           value={currentPrompt}
           onChange={(e) => setCurrentPrompt(e.target.value)}
           disabled={isPlaying}
           className="flex-1 bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-xs text-white focus:outline-none focus:border-[#7C3AED]/50"
         />
-        <button 
+        <button
           onClick={triggerAnimation}
           disabled={isPlaying}
           className="px-4 py-2 bg-[#7C3AED] hover:bg-[#7C3AED]/80 text-white font-bold text-xs rounded-lg flex items-center gap-1.5 cursor-pointer disabled:opacity-50"
@@ -1162,7 +1150,7 @@ function TransactAIWidget() {
       {/* Interactive SMS trigger feed */}
       <div className="space-y-2 max-h-[140px] overflow-y-auto">
         <span className="text-[9px] font-mono text-gray-500 uppercase tracking-widest block font-semibold">Real-time Transaction Stream</span>
-        
+
         {isClassifying ? (
           <div className="p-3 bg-[#10B981]/15 text-[#10B981] rounded-xl border border-[#10B981]/30 flex items-center justify-between font-mono text-xs">
             <span className="flex items-center gap-2"><LoaderIcon className="animate-spin" /> Classifying SMS alert via DistilBERT...</span>
@@ -1191,7 +1179,7 @@ function TransactAIWidget() {
 
       {/* Button simulation handler */}
       <div className="mt-4">
-        <button 
+        <button
           onClick={simulateAlert}
           disabled={isClassifying}
           className="w-full py-2.5 bg-emerald-500 hover:bg-emerald-600 text-white font-bold text-xs rounded-xl flex items-center justify-center gap-2 transition-all cursor-pointer disabled:opacity-50"
@@ -1234,7 +1222,7 @@ function InstaClaimWidget() {
 
       {/* Scanning interactive workspace container */}
       <div className="flex-1 glass-card border-dashed border-white/10 rounded-xl overflow-hidden p-4 relative flex flex-col justify-center min-h-[140px]">
-        
+
         {isScanning && (
           // Laser scrolling scan beam visual effect
           <div className="absolute inset-0 bg-black/70 flex flex-col justify-center items-center">
@@ -1269,7 +1257,7 @@ function InstaClaimWidget() {
 
       {/* Button action trigger */}
       <div className="mt-4">
-        <button 
+        <button
           onClick={triggerScan}
           disabled={isScanning}
           className="w-full py-2.5 bg-gradient-to-r from-[#f59e0b] to-[#d97706] text-black font-extrabold text-xs rounded-xl flex items-center justify-center gap-2 hover:scale-[1.01] transition-all cursor-pointer disabled:opacity-50"
@@ -1293,22 +1281,22 @@ function MultiAgentWidget() {
     if (crewActive) return;
     setCrewActive(true);
     setTerminalLogs([]);
-    
+
     // Stage 1: Planner Agent
     setActiveAgent('planner');
     setTerminalLogs(prev => [...prev, "[CrewAI v2.8] Starting collaborative task planning..."]);
     setTerminalLogs(prev => [...prev, "🎨 Planner Agent: Ideating interactive workflow assets..."]);
-    
+
     // Stage 2: Developer Agent
     setTimeout(() => {
       setActiveAgent('developer');
       setTerminalLogs(prev => [...prev, "💻 Python Code Developer: Writing math functions..."]);
-      
+
       // Stage 3: QA auditor Check
       setTimeout(() => {
         setActiveAgent('qa');
         setTerminalLogs(prev => [...prev, "🔬 QA Reviewer: Testing safety bounds & exceptions..."]);
-        
+
         // Stage 4: Completed
         setTimeout(() => {
           setActiveAgent('complete');
@@ -1355,7 +1343,7 @@ function MultiAgentWidget() {
 
       {/* Button trigger */}
       <div className="mt-4">
-        <button 
+        <button
           onClick={runMultiCrew}
           disabled={crewActive}
           className="w-full py-2.5 bg-purple-600 hover:bg-purple-700 text-white font-bold text-xs rounded-xl flex items-center justify-center gap-2 hover:scale-[1.01] transition-all cursor-pointer disabled:opacity-50"
@@ -1406,7 +1394,7 @@ function WorkLoggerWidget() {
             <span className="w-1/4">Hours</span>
             <span className="w-1/2">Log Notes</span>
           </div>
-          
+
           {logs.map((lg, i) => (
             <div key={i} className="flex border-b border-white/5 py-1 text-slate-300">
               <span className="w-1/4 text-[#a78bfa] font-bold">{lg.pName}</span>
@@ -1425,15 +1413,15 @@ function WorkLoggerWidget() {
 
       {/* Interactive prompt-input logger entry */}
       <div className="mt-4 flex gap-2">
-        <input 
-          type="text" 
+        <input
+          type="text"
           value={inputText}
           onChange={(e) => setInputText(e.target.value)}
           disabled={isProcessing}
           placeholder="Type activity logs naturally..."
           className="flex-1 bg-white/5 border border-white/10 rounded-lg px-2.5 py-1.5 text-xs text-white focus:outline-none focus:border-[#10B981]/50"
         />
-        <button 
+        <button
           onClick={handleParseText}
           disabled={isProcessing}
           className="px-3 py-1.5 bg-emerald-500 hover:bg-emerald-600 text-black font-extrabold text-xs rounded-lg flex items-center gap-1 shrink-0 cursor-pointer disabled:opacity-50"
@@ -1456,7 +1444,7 @@ function InterviewAssistantWidget() {
   const simulateCandidateAnswer = (choice: 'optimal' | 'mediocre') => {
     setActiveStep(1);
     setActiveText("AI is processing audio signal (AssemblyAI)...");
-    
+
     setTimeout(() => {
       setActiveStep(2);
       if (choice === 'optimal') {
@@ -1489,13 +1477,13 @@ function InterviewAssistantWidget() {
           <div className="my-auto text-center space-y-4">
             <div className="flex justify-center items-end gap-1 h-12">
               {Array.from({ length: 9 }).map((_, i) => (
-                <div 
-                  key={i} 
-                  className="w-1.5 bg-blue-500 rounded-full waveform-bar" 
-                  style={{ 
+                <div
+                  key={i}
+                  className="w-1.5 bg-blue-500 rounded-full waveform-bar"
+                  style={{
                     animationDelay: `${i * 0.1}s`,
-                    height: `${Math.floor(Math.random() * 40 + 10)}px` 
-                  }} 
+                    height: `${Math.floor(Math.random() * 40 + 10)}px`
+                  }}
                 />
               ))}
             </div>
@@ -1536,7 +1524,7 @@ function InterviewAssistantWidget() {
       {/* Simulation triggers actions */}
       <div className="mt-4 flex gap-2">
         {activeStep === 2 ? (
-          <button 
+          <button
             onClick={handleReset}
             className="w-full py-2 border border-white/10 hover:border-slate-400 text-slate-300 font-bold rounded-lg cursor-pointer transition-colors"
           >
@@ -1544,14 +1532,14 @@ function InterviewAssistantWidget() {
           </button>
         ) : (
           <>
-            <button 
+            <button
               disabled={activeStep === 1}
               onClick={() => simulateCandidateAnswer('optimal')}
               className="w-1/2 py-2 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-lg cursor-pointer transition-colors disabled:opacity-50"
             >
               Simulate Good Answer
             </button>
-            <button 
+            <button
               disabled={activeStep === 1}
               onClick={() => simulateCandidateAnswer('mediocre')}
               className="w-1/2 py-2 bg-white/5 hover:bg-white/10 text-slate-300 border border-white/10 font-bold rounded-lg cursor-pointer transition-colors disabled:opacity-50"

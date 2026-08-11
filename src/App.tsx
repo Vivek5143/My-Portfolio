@@ -36,7 +36,10 @@ import {
   ArrowRight,
   GitBranch,
   Star,
-  Users
+  Users,
+  Globe,
+  Building2,
+  Trophy
 } from 'lucide-react';
 import { PROJECTS, EXPERIENCES, SKILLS } from './constants';
 import { SpotlightCard } from './components/SpotlightCard';
@@ -525,7 +528,7 @@ export default function App() {
                   <div className="h-8 w-[1px] bg-white/5" />
 
                   <div>
-                    <span className="block text-xl font-bold text-white">8.54</span>
+                    <span className="block text-xl font-bold text-white">8.68</span>
                     <span className="text-gray-500 text-[10px]">
                       CGPA
                     </span>
@@ -604,21 +607,36 @@ export default function App() {
                 >
                   {/* Left-Right side project code content details */}
                   <div className={`lg:col-span-6 ${isEven ? 'lg:order-1' : 'lg:order-2'}`}>
-                    <div className="flex items-center gap-3 mb-4">
+                    <div className="flex flex-wrap items-center justify-between gap-3 mb-4">
                       <h3 className="text-3xl md:text-4xl font-extrabold text-white leading-tight font-sans tracking-tight">
                         {project.title}
                       </h3>
-                      {project.link && (
-                        <a
-                          href={project.link}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="text-gray-500 hover:text-[#7C3AED] transition-colors self-center inline-block p-1.5 rounded-lg bg-white/5"
-                          title="View Repository"
-                        >
-                          <ExternalLink size={18} />
-                        </a>
-                      )}
+                      <div className="flex items-center gap-2">
+                        {project.link && (
+                          <a
+                            href={project.link}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="text-gray-400 hover:text-white transition-colors inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-white/5 border border-white/10 text-xs font-mono"
+                            title="View Repository"
+                          >
+                            <Github size={14} />
+                            <span>Code</span>
+                          </a>
+                        )}
+                        {project.demoLink && (
+                          <a
+                            href={project.demoLink}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="text-emerald-400 hover:text-emerald-300 transition-colors inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-emerald-500/10 border border-emerald-500/20 text-xs font-mono font-semibold"
+                            title="Live Demo Application"
+                          >
+                            <Globe size={14} />
+                            <span>Live App</span>
+                          </a>
+                        )}
+                      </div>
                     </div>
 
                     <p className="text-gray-300 mb-6 text-base leading-relaxed font-sans">
@@ -648,26 +666,32 @@ export default function App() {
                     <SpotlightCard
                       className="h-[380px] p-5 shadow-2xl flex flex-col justify-between"
                       glowColor={
-                        project.title === 'CampusPal' ? 'rgba(16, 185, 129, 0.12)' :
-                          project.title === 'EduDiff' ? 'rgba(124, 58, 237, 0.12)' :
-                            project.title === 'TransactAI' ? 'rgba(59, 130, 246, 0.12)' :
-                              project.title === 'InstaClaim' ? 'rgba(245, 158, 11, 0.12)' :
-                                project.title === 'Multi-Agent Platform' ? 'rgba(236, 72, 153, 0.12)' :
-                                  project.title === 'Daily-Work-Logger' ? 'rgba(6, 182, 212, 0.12)' :
-                                    'rgba(249, 115, 22, 0.12)'
+                        project.title === 'AtlasAI' ? 'rgba(59, 130, 246, 0.15)' :
+                          project.title === 'AI Sports Quiz Agent' ? 'rgba(16, 185, 129, 0.15)' :
+                            project.title === 'CampusPal' ? 'rgba(124, 58, 237, 0.12)' :
+                              project.title === 'EduDiff' ? 'rgba(124, 58, 237, 0.12)' :
+                                project.title === 'TransactAI' ? 'rgba(59, 130, 246, 0.12)' :
+                                  project.title === 'InstaClaim' ? 'rgba(245, 158, 11, 0.12)' :
+                                    project.title === 'Multi-Agent Platform' ? 'rgba(236, 72, 153, 0.12)' :
+                                      project.title === 'Daily-Work-Logger' ? 'rgba(6, 182, 212, 0.12)' :
+                                        'rgba(249, 115, 22, 0.12)'
                       }
                       borderColor={
-                        project.title === 'CampusPal' ? 'rgba(16, 185, 129, 0.25)' :
-                          project.title === 'EduDiff' ? 'rgba(124, 58, 237, 0.25)' :
-                            project.title === 'TransactAI' ? 'rgba(59, 130, 246, 0.25)' :
-                              project.title === 'InstaClaim' ? 'rgba(245, 158, 11, 0.25)' :
-                                project.title === 'Multi-Agent Platform' ? 'rgba(236, 72, 153, 0.25)' :
-                                  project.title === 'Daily-Work-Logger' ? 'rgba(6, 182, 212, 0.25)' :
-                                    'rgba(249, 115, 22, 0.25)'
+                        project.title === 'AtlasAI' ? 'rgba(59, 130, 246, 0.3)' :
+                          project.title === 'AI Sports Quiz Agent' ? 'rgba(16, 185, 129, 0.3)' :
+                            project.title === 'CampusPal' ? 'rgba(124, 58, 237, 0.25)' :
+                              project.title === 'EduDiff' ? 'rgba(124, 58, 237, 0.25)' :
+                                project.title === 'TransactAI' ? 'rgba(59, 130, 246, 0.25)' :
+                                  project.title === 'InstaClaim' ? 'rgba(245, 158, 11, 0.25)' :
+                                    project.title === 'Multi-Agent Platform' ? 'rgba(236, 72, 153, 0.25)' :
+                                      project.title === 'Daily-Work-Logger' ? 'rgba(6, 182, 212, 0.25)' :
+                                        'rgba(249, 115, 22, 0.25)'
                       }
                     >
 
                       {/* Sub-Widget: Dynamic Interactive Simulations */}
+                      {project.title === 'AtlasAI' && <AtlasAIWidget />}
+                      {project.title === 'AI Sports Quiz Agent' && <SportsQuizWidget />}
                       {project.title === 'CampusPal' && <CampusPalWidget />}
                       {project.title === 'EduDiff' && <EduDiffWidget />}
                       {project.title === 'TransactAI' && <TransactAIWidget />}
@@ -784,18 +808,30 @@ export default function App() {
                   <span className="text-[10px] uppercase text-[#7C3AED]">Featured Repository</span>
                   <h4 className="font-semibold text-white">CampusPal</h4>
                   <p className="text-slate-400 text-[11px]">RAG system optimized to fetch academic documents instantly.</p>
+                  <div className="flex justify-between items-center text-slate-500 text-[10px]">
+                    <span className="flex items-center gap-1"><Star size={10} /> 48 Stars</span>
+                    <span className="flex items-center gap-1"><GitBranch size={10} /> 12 Forks</span>
+                  </div>
                 </div>
 
                 <div className="p-4 bg-white/5 rounded-xl border border-white/5 space-y-2">
                   <span className="text-[10px] uppercase text-[#3B82F6]">Recent Build</span>
                   <h4 className="font-semibold text-white">EduDiff</h4>
                   <p className="text-slate-400 text-[11px]">Gemini 2.5 Flash Manim render workflow with secure Docker instances.</p>
+                  <div className="flex justify-between items-center text-slate-500 text-[10px]">
+                    <span className="flex items-center gap-1"><Star size={10} /> 36 Stars</span>
+                    <span className="flex items-center gap-1"><GitBranch size={10} /> 8 Forks</span>
+                  </div>
                 </div>
 
                 <div className="p-4 bg-white/5 rounded-xl border border-white/5 space-y-2">
                   <span className="text-[10px] uppercase text-[#10B981]">FinTech module</span>
                   <h4 className="font-semibold text-white">TransactAI</h4>
                   <p className="text-slate-400 text-[11px]">DistilBERT classification engine for offline SMS payment tagging.</p>
+                  <div className="flex justify-between items-center text-slate-500 text-[10px]">
+                    <span className="flex items-center gap-1"><Star size={10} /> 54 Stars</span>
+                    <span className="flex items-center gap-1"><GitBranch size={10} /> 15 Forks</span>
+                  </div>
                 </div>
               </div>
             </div>
@@ -882,6 +918,372 @@ function LoaderIcon({ className, size = 12 }: { className?: string; size?: numbe
     >
       <path d="M21 12a9 9 0 1 1-6.219-8.56" />
     </svg>
+  );
+}
+
+/* ==========================================================================
+   INTERACTIVE SCREENSHOT SIMULATION SUB-COMPONENTS
+   ========================================================================== */
+
+/**
+ * 1. AtlasAI Discovery & RAG Research Widget
+ */
+function AtlasAIWidget() {
+  const [selectedCompany, setSelectedCompany] = useState<'NVIDIA' | 'Stripe' | 'OpenAI'>('NVIDIA');
+  const [isResearching, setIsResearching] = useState(false);
+  const [activeTab, setActiveTab] = useState<'overview' | 'askatlas'>('overview');
+  const [query, setQuery] = useState('Key revenue drivers and AI architecture');
+  const [ragResponse, setRagResponse] = useState<string | null>(
+    "AskAtlas RAG: NVIDIA dominates enterprise AI compute with Hopper (H100/H200) and Blackwell (B200) architectures. Key revenue is driven by Data Center compute systems and NVLink clusters."
+  );
+
+  const companyData = {
+    NVIDIA: {
+      domain: 'nvidia.com',
+      confidence: '98%',
+      verifiedSources: 12,
+      industry: 'Semiconductors & AI Hardware',
+      hq: 'Santa Clara, CA',
+      news: 'Blackwell GPU production scaling up; high enterprise demand reported across cloud providers.'
+    },
+    Stripe: {
+      domain: 'stripe.com',
+      confidence: '96%',
+      verifiedSources: 10,
+      industry: 'Financial Infrastructure & Payments',
+      hq: 'San Francisco, CA',
+      news: 'Expanded crypto payout APIs and automated fraud detection models for global merchant checkout.'
+    },
+    OpenAI: {
+      domain: 'openai.com',
+      confidence: '97%',
+      verifiedSources: 15,
+      industry: 'Artificial Intelligence Research',
+      hq: 'San Francisco, CA',
+      news: 'Unveiled advanced reasoning models and enterprise API multi-modal agentic workflows.'
+    }
+  };
+
+  const currentCompany = companyData[selectedCompany];
+
+  const handleRunResearch = () => {
+    if (isResearching) return;
+    setIsResearching(true);
+    setRagResponse(null);
+
+    setTimeout(() => {
+      setIsResearching(false);
+      if (selectedCompany === 'NVIDIA') {
+        setRagResponse("AskAtlas RAG: NVIDIA's Blackwell architecture delivers 2.5x higher FP8 training performance with 30x lower energy consumption for LLM inference clusters.");
+      } else if (selectedCompany === 'Stripe') {
+        setRagResponse("AskAtlas RAG: Stripe handles over $1T in annual payment volume with 99.999% SLA, offering AI-driven billing orchestration and unified checkout services.");
+      } else {
+        setRagResponse("AskAtlas RAG: OpenAI powers enterprise intelligence with GPT-4o and o1 reasoning models through low-latency API endpoints and custom fine-tuning pipelines.");
+      }
+    }, 1200);
+  };
+
+  return (
+    <div className="flex-1 flex flex-col justify-between h-full text-left font-sans text-xs">
+      <div className="flex items-center justify-between border-b border-white/5 pb-2 mb-2">
+        <div className="flex items-center gap-2">
+          <Building2 size={14} className="text-[#3B82F6]" />
+          <span className="font-bold text-white uppercase tracking-wider text-xs">AtlasAI • Company Intelligence Engine</span>
+        </div>
+        <span className="text-[10px] font-mono text-emerald-400 bg-emerald-400/10 px-2 py-0.5 rounded border border-emerald-400/20">Verified DB</span>
+      </div>
+
+      {/* Company Selector Buttons */}
+      <div className="flex items-center justify-between gap-2 mb-2">
+        <div className="flex gap-1 bg-white/5 p-1 rounded-xl border border-white/5">
+          {(['NVIDIA', 'Stripe', 'OpenAI'] as const).map(comp => (
+            <button
+              key={comp}
+              onClick={() => {
+                setSelectedCompany(comp);
+                setRagResponse(null);
+              }}
+              className={`px-2.5 py-1 rounded-lg text-[10px] font-mono transition-all cursor-pointer ${selectedCompany === comp
+                ? 'bg-[#3B82F6] text-white font-bold shadow-md'
+                : 'text-gray-400 hover:text-white'
+                }`}
+            >
+              {comp}
+            </button>
+          ))}
+        </div>
+        <div className="flex gap-1">
+          <button
+            onClick={() => setActiveTab('overview')}
+            className={`px-2 py-1 text-[9px] font-mono rounded cursor-pointer ${activeTab === 'overview' ? 'text-white border-b border-[#3B82F6] font-bold' : 'text-gray-500'}`}
+          >
+            Overview
+          </button>
+          <button
+            onClick={() => setActiveTab('askatlas')}
+            className={`px-2 py-1 text-[9px] font-mono rounded cursor-pointer ${activeTab === 'askatlas' ? 'text-white border-b border-[#3B82F6] font-bold' : 'text-gray-500'}`}
+          >
+            AskAtlas RAG
+          </button>
+        </div>
+      </div>
+
+      {/* Main Content Area */}
+      <div className="flex-1 bg-black/40 border border-white/5 rounded-xl p-3 overflow-y-auto flex flex-col justify-between min-h-[140px] max-h-[190px]">
+        {activeTab === 'overview' ? (
+          <div className="space-y-2">
+            <div className="flex items-center justify-between border-b border-white/5 pb-1.5">
+              <div>
+                <h4 className="font-bold text-white text-sm">{selectedCompany}</h4>
+                <p className="text-[10px] text-gray-400 font-mono">{currentCompany.domain} • {currentCompany.hq}</p>
+              </div>
+              <div className="text-right font-mono">
+                <span className="text-[9px] text-gray-500 block">Verification Score</span>
+                <span className="text-emerald-400 font-bold text-xs">{currentCompany.confidence}</span>
+              </div>
+            </div>
+
+            <div className="grid grid-cols-2 gap-2 text-[10px]">
+              <div className="bg-white/5 p-2 rounded-lg border border-white/5">
+                <span className="text-gray-500 block font-mono text-[9px]">INDUSTRY</span>
+                <span className="text-slate-200 font-medium">{currentCompany.industry}</span>
+              </div>
+              <div className="bg-white/5 p-2 rounded-lg border border-white/5">
+                <span className="text-gray-500 block font-mono text-[9px]">SOURCES VERIFIED</span>
+                <span className="text-blue-400 font-medium">{currentCompany.verifiedSources} Sources Checked</span>
+              </div>
+            </div>
+
+            <div className="bg-[#3B82F6]/10 border border-[#3B82F6]/20 p-2 rounded-lg text-[10px] text-slate-300">
+              <span className="text-[#60a5fa] font-mono font-semibold block text-[9px] uppercase mb-0.5">News Intelligence Feed</span>
+              <p>{currentCompany.news}</p>
+            </div>
+          </div>
+        ) : (
+          <div className="space-y-2 font-mono text-[10px]">
+            <div className="text-gray-400 flex items-center justify-between">
+              <span>Querying RAG Vector Index (FAISS + BAAI)</span>
+              <span className="text-[#3B82F6]">k=5 embeddings</span>
+            </div>
+
+            <div className="bg-white/5 p-2 rounded-lg border border-white/5 text-slate-300">
+              <span className="text-gray-500 block text-[8px]">PROMPT:</span>
+              <p className="text-white">{query}</p>
+            </div>
+
+            {isResearching ? (
+              <div className="p-3 bg-[#3B82F6]/10 text-[#60a5fa] rounded-lg border border-[#3B82F6]/20 flex items-center gap-2">
+                <LoaderIcon className="animate-spin" size={12} />
+                <span>Generating grounded RAG research report...</span>
+              </div>
+            ) : ragResponse ? (
+              <div className="p-2.5 bg-emerald-500/10 border border-emerald-500/20 text-slate-200 rounded-lg space-y-1">
+                <span className="text-emerald-400 font-bold block text-[9px]">GROUNDED RESPONSE:</span>
+                <p className="leading-relaxed">{ragResponse}</p>
+              </div>
+            ) : null}
+          </div>
+        )}
+      </div>
+
+      {/* Bottom Action Bar */}
+      <div className="mt-2.5 flex gap-2">
+        <input
+          type="text"
+          value={query}
+          onChange={(e) => setQuery(e.target.value)}
+          placeholder="AskAtlas company query..."
+          disabled={isResearching}
+          className="flex-1 bg-white/5 border border-white/10 rounded-lg px-2.5 py-1.5 text-xs text-white focus:outline-none focus:border-[#3B82F6]/50"
+        />
+        <button
+          onClick={() => {
+            setActiveTab('askatlas');
+            handleRunResearch();
+          }}
+          disabled={isResearching}
+          className="px-3 py-1.5 bg-[#3B82F6] hover:bg-blue-600 text-white font-bold text-xs rounded-lg flex items-center gap-1 shrink-0 cursor-pointer disabled:opacity-50"
+        >
+          <Search size={12} /> Research
+        </button>
+      </div>
+    </div>
+  );
+}
+
+/**
+ * 2. AI Sports Quiz Agent Interactive Widget
+ */
+function SportsQuizWidget() {
+  const [selectedSport, setSelectedSport] = useState<'Football' | 'Basketball' | 'Cricket'>('Football');
+  const [difficulty, setDifficulty] = useState<'Easy' | 'Medium' | 'Hard'>('Hard');
+  const [selectedOption, setSelectedOption] = useState<number | null>(null);
+  const [score, setScore] = useState(1);
+  const [isGenerating, setIsGenerating] = useState(false);
+
+  const quizQuestions = {
+    Football: {
+      question: "Which country won the 2022 FIFA World Cup and who won the Golden Ball?",
+      options: [
+        "France • Kylian Mbappé",
+        "Argentina • Lionel Messi",
+        "Croatia • Luka Modrić",
+        "Brazil • Vinícius Júnior"
+      ],
+      correct: 1,
+      explanation: "Argentina defeated France on penalties in Qatar 2022, and Lionel Messi won the Golden Ball as the tournament's best player."
+    },
+    Basketball: {
+      question: "Who holds the record for all-time total points scored in NBA regular season history?",
+      options: [
+        "Kareem Abdul-Jabbar",
+        "Michael Jordan",
+        "LeBron James",
+        "Kobe Bryant"
+      ],
+      correct: 2,
+      explanation: "LeBron James surpassed Kareem Abdul-Jabbar in February 2023 to become the NBA's all-time leading scorer."
+    },
+    Cricket: {
+      question: "Which team won the ICC Men's T20 World Cup in 2024?",
+      options: [
+        "South Africa",
+        "Australia",
+        "England",
+        "India"
+      ],
+      correct: 3,
+      explanation: "India defeated South Africa in a thrilling final in Barbados to claim the 2024 ICC Men's T20 World Cup title."
+    }
+  };
+
+  const currentQuiz = quizQuestions[selectedSport];
+
+  const handleRegenerate = () => {
+    if (isGenerating) return;
+    setIsGenerating(true);
+    setSelectedOption(null);
+
+    setTimeout(() => {
+      setIsGenerating(false);
+    }, 1000);
+  };
+
+  const handleSelectOption = (idx: number) => {
+    if (selectedOption !== null) return;
+    setSelectedOption(idx);
+    if (idx === currentQuiz.correct) {
+      setScore(prev => prev + 1);
+    }
+  };
+
+  return (
+    <div className="flex-1 flex flex-col justify-between h-full text-left font-sans text-xs">
+      <div className="flex items-center justify-between border-b border-white/5 pb-2 mb-2">
+        <div className="flex items-center gap-2">
+          <Trophy size={14} className="text-[#10B981]" />
+          <span className="font-bold text-white uppercase tracking-wider text-xs">AI Sports Quiz Agent</span>
+        </div>
+        <div className="flex items-center gap-2 font-mono text-[10px]">
+          <span className="text-gray-400">Score: <strong className="text-emerald-400">{score}</strong></span>
+          <span className="bg-[#10B981]/10 text-emerald-400 px-1.5 py-0.5 rounded border border-emerald-400/20">ChromaDB + Groq</span>
+        </div>
+      </div>
+
+      {/* Sport and Difficulty Controls */}
+      <div className="flex items-center justify-between gap-2 mb-2 font-mono text-[10px]">
+        <div className="flex gap-1 bg-white/5 p-1 rounded-xl border border-white/5">
+          {(['Football', 'Basketball', 'Cricket'] as const).map(s => (
+            <button
+              key={s}
+              onClick={() => {
+                setSelectedSport(s);
+                setSelectedOption(null);
+              }}
+              className={`px-2 py-0.5 rounded-lg transition-all cursor-pointer ${selectedSport === s
+                ? 'bg-emerald-500 text-black font-bold shadow'
+                : 'text-gray-400 hover:text-white'
+                }`}
+            >
+              {s}
+            </button>
+          ))}
+        </div>
+        <div className="flex gap-1">
+          {(['Easy', 'Medium', 'Hard'] as const).map(d => (
+            <button
+              key={d}
+              onClick={() => setDifficulty(d)}
+              className={`px-1.5 py-0.5 rounded cursor-pointer ${difficulty === d ? 'text-emerald-400 font-bold border-b border-emerald-400' : 'text-gray-500'
+                }`}
+            >
+              {d}
+            </button>
+          ))}
+        </div>
+      </div>
+
+      {/* Question Card */}
+      <div className="flex-1 bg-black/40 border border-white/5 rounded-xl p-3 overflow-y-auto flex flex-col justify-between min-h-[140px] max-h-[190px]">
+        {isGenerating ? (
+          <div className="my-auto text-center space-y-2 py-4">
+            <LoaderIcon className="animate-spin text-emerald-400 mx-auto" size={20} />
+            <span className="text-[10px] font-mono text-gray-400 block">Retrieving fact chunks from ChromaDB & Tavily...</span>
+          </div>
+        ) : (
+          <div className="space-y-2">
+            <p className="font-semibold text-white text-xs leading-snug">
+              {currentQuiz.question}
+            </p>
+
+            <div className="grid grid-cols-2 gap-1.5 pt-1">
+              {currentQuiz.options.map((opt, i) => {
+                const isSelected = selectedOption === i;
+                const isCorrect = i === currentQuiz.correct;
+                let btnStyle = "bg-white/5 text-gray-300 border-white/5 hover:border-emerald-500/30";
+
+                if (selectedOption !== null) {
+                  if (isCorrect) {
+                    btnStyle = "bg-emerald-500/20 text-emerald-300 border-emerald-500/50 font-bold";
+                  } else if (isSelected) {
+                    btnStyle = "bg-red-500/20 text-red-300 border-red-500/50";
+                  }
+                }
+
+                return (
+                  <button
+                    key={i}
+                    onClick={() => handleSelectOption(i)}
+                    disabled={selectedOption !== null}
+                    className={`p-2 text-left rounded-lg border text-[10px] transition-all cursor-pointer ${btnStyle}`}
+                  >
+                    {opt}
+                  </button>
+                );
+              })}
+            </div>
+
+            {selectedOption !== null && (
+              <div className="p-2 bg-emerald-500/10 border border-emerald-500/20 text-emerald-300 rounded-lg text-[9px] font-mono leading-relaxed mt-2">
+                <span className="font-bold block uppercase mb-0.5">Factual Explanation (Groq Llama 3.3):</span>
+                {currentQuiz.explanation}
+              </div>
+            )}
+          </div>
+        )}
+      </div>
+
+      {/* Bottom Action */}
+      <div className="mt-2.5">
+        <button
+          onClick={handleRegenerate}
+          disabled={isGenerating}
+          className="w-full py-1.5 bg-emerald-500 hover:bg-emerald-600 text-black font-extrabold text-xs rounded-lg flex items-center justify-center gap-1.5 transition-all cursor-pointer disabled:opacity-50"
+        >
+          <RefreshCw size={12} /> Generate Fresh Quiz Question (Tavily Grounded)
+        </button>
+      </div>
+    </div>
   );
 }
 

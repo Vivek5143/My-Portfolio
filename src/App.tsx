@@ -454,7 +454,7 @@ export default function App() {
 
                       <p className="text-sm text-slate-300 mt-1">
                         CGPA:
-                        <span className="text-[#10B981] font-bold"> 8.54 / 10</span>
+                        <span className="text-[#10B981] font-bold"> 8.68 / 10</span>
                       </p>
                     </div>
                   </div>

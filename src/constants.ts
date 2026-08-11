@@ -2,6 +2,30 @@ import { Project, Experience, SkillCategory } from './types';
 
 export const PROJECTS: Project[] = [
   {
+    title: "AtlasAI",
+    description: "An end-to-end AI platform that enables users to discover, verify, and analyze companies through intelligent search, Retrieval-Augmented Generation (RAG), automated company discovery, and AI-powered research.",
+    technologies: ["React.js", "TypeScript", "FastAPI", "Python", "Google Gemini API", "LangChain", "RAG Pipeline", "FAISS", "PostgreSQL", "Tavily Search API", "Vercel", "Docker"],
+    highlights: [
+      "Built a complete Retrieval-Augmented Generation (RAG) pipeline with FAISS vector store and BAAI embeddings for context-aware company research (AskAtlas).",
+      "Developed an automated AI company discovery engine with web extraction, multi-stage verification pipeline, confidence scoring, and duplicate detection.",
+      "Designed a scalable Clean Architecture REST API in FastAPI with PostgreSQL/SQLAlchemy, JWT role-based access control, and admin approval workflows.",
+      "Integrated real-time company news intelligence and automated web extraction grounded in verified multi-source intelligence."
+    ],
+    link: "https://github.com/Vivek5143/AtlasAI",
+    demoLink: "https://atlas-ai-ashen.vercel.app/"
+  },
+  {
+    title: "AI Sports Quiz Agent",
+    description: "An intelligent RAG-powered quiz generation platform that creates engaging and factually grounded sports quizzes using Large Language Models, semantic search, and real-time web search.",
+    technologies: ["Streamlit", "Python", "Groq API (Llama 3.3)", "ChromaDB", "LangChain", "Sentence Transformers", "Tavily Search API"],
+    highlights: [
+      "RAG-powered quiz generation architecture combining semantic retrieval from ChromaDB vector store with live web search via Tavily to eliminate hallucinations.",
+      "Integrates Groq Llama 3.3 70B Versatile LLM for real-time creation of customizable multiple-choice sports questions with detailed explanations.",
+      "Interactive scoring dashboard with dynamic difficulty selection, topic customization, and fresh quiz regeneration with duplicate avoidance."
+    ],
+    link: "https://github.com/Vivek5143/ai-sports-quiz-agent"
+  },
+  {
     title: "CampusPal",
     description: "An AI-powered campus assistant specifically designed for APSIT. It provides intelligent responses to student queries about admissions, fees, courses, placements, faculty, and campus facilities.",
     technologies: ["React 19", "Vite", "Tailwind CSS", "FastAPI", "LangChain", "Groq LLM", "FAISS", "Hugging Face Embeddings", "Docker"],

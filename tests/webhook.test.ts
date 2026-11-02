@@ -1,4 +1,4 @@
-import { describe, it, expect, beforeEach } from 'vitest';
+import { describe, it, expect, beforeEach, afterEach } from 'vitest';
 import request from 'supertest';
 import express from 'express';
 import crypto from 'crypto';
@@ -7,17 +7,16 @@ import { FileProjectStore } from '../server/db';
 import { processWebhookEvent, verifyGitHubSignature } from '../server/webhook';
 import path from 'path';
 import fs from 'fs';
+import os from 'os';
 
 describe('GitHub Webhook Signature Verification & Idempotent Processing', () => {
   let app: express.Express;
   let store: FileProjectStore;
   const webhookSecret = 'test_webhook_secret_key_12345';
-  const testDataDir = path.resolve(process.cwd(), 'data-test-webhook');
+  let testDataDir: string;
 
   beforeEach(async () => {
-    if (fs.existsSync(testDataDir)) {
-      fs.rmSync(testDataDir, { recursive: true, force: true });
-    }
+    testDataDir = fs.mkdtempSync(path.join(os.tmpdir(), 'portfolio-webhook-'));
     store = new FileProjectStore(testDataDir);
     await store.init();
 
@@ -28,6 +27,12 @@ describe('GitHub Webhook Signature Verification & Idempotent Processing', () => 
       },
     }));
     app.use('/api', createApiRouter(store));
+  });
+
+  afterEach(() => {
+    if (fs.existsSync(testDataDir)) {
+      fs.rmSync(testDataDir, { recursive: true, force: true });
+    }
   });
 
   function computeSignature(payload: string, secret: string): string {

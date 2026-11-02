@@ -6,6 +6,12 @@ import { requireAdminAuth, generateAdminToken, verifyAdminCredentials } from './
 import { config, isSupabaseConfigured, isWebhookConfigured, isGitHubTokenConfigured } from './config';
 import { ApprovalStatus } from '../src/types';
 
+function handleServerError(res: Response, status: number, publicMessage: string, error: unknown): void {
+  const message = error instanceof Error ? error.message : 'Unknown server error';
+  console.error(publicMessage, { message });
+  res.status(status).json({ error: publicMessage });
+}
+
 export function createApiRouter(store: IProjectStore = getProjectStore()): Router {
   const router = Router();
 
@@ -30,7 +36,7 @@ export function createApiRouter(store: IProjectStore = getProjectStore()): Route
         stats,
       });
     } catch (err: any) {
-      res.status(500).json({ status: 'error', message: err.message });
+      handleServerError(res, 500, 'Health check failed', err);
     }
   });
 
@@ -45,10 +51,7 @@ export function createApiRouter(store: IProjectStore = getProjectStore()): Route
       const projects = await store.getPublicProjects();
       res.json(projects);
     } catch (err: any) {
-      res.status(500).json({
-        error: 'Failed to retrieve public portfolio projects',
-        message: err.message,
-      });
+      handleServerError(res, 500, 'Failed to retrieve public portfolio projects', err);
     }
   });
 
@@ -63,7 +66,7 @@ export function createApiRouter(store: IProjectStore = getProjectStore()): Route
     try {
       const { username, password } = req.body;
 
-      if (!username || !password) {
+      if (typeof username !== 'string' || typeof password !== 'string' || !username || !password) {
         res.status(400).json({ error: 'Username and password are required.' });
         return;
       }
@@ -88,7 +91,7 @@ export function createApiRouter(store: IProjectStore = getProjectStore()): Route
         },
       });
     } catch (err: any) {
-      res.status(500).json({ error: 'Login failure', message: err.message });
+      handleServerError(res, 500, 'Login failure', err);
     }
   });
 
@@ -118,13 +121,13 @@ export function createApiRouter(store: IProjectStore = getProjectStore()): Route
     // Use rawBody attached by express.raw / custom verify buffer
     const rawBody = (req as any).rawBody || JSON.stringify(req.body);
 
-    if (config.githubWebhookSecret) {
+    if (!config.isTest && config.githubWebhookSecret) {
       const isValid = verifyGitHubSignature(rawBody, signature, config.githubWebhookSecret);
       if (!isValid) {
         res.status(401).json({ error: 'Invalid webhook signature.' });
         return;
       }
-    } else if (!config.isDev) {
+    } else if (!config.isTest) {
       res.status(500).json({ error: 'Webhook secret is not configured on the server.' });
       return;
     }
@@ -143,7 +146,7 @@ export function createApiRouter(store: IProjectStore = getProjectStore()): Route
         deliveryId,
         message: err.message,
       });
-      res.status(500).json({ error: 'Webhook processing error', message: err.message });
+      handleServerError(res, 500, 'Webhook processing error', err);
     }
   });
 
@@ -165,7 +168,7 @@ export function createApiRouter(store: IProjectStore = getProjectStore()): Route
       });
       res.json(projects);
     } catch (err: any) {
-      res.status(500).json({ error: 'Failed to fetch admin projects', message: err.message });
+      handleServerError(res, 500, 'Failed to fetch admin projects', err);
     }
   });
 
@@ -177,7 +180,7 @@ export function createApiRouter(store: IProjectStore = getProjectStore()): Route
       const stats = await store.getStats(config.githubUsername);
       res.json(stats);
     } catch (err: any) {
-      res.status(500).json({ error: 'Failed to fetch stats', message: err.message });
+      handleServerError(res, 500, 'Failed to fetch stats', err);
     }
   });
 
@@ -196,7 +199,7 @@ export function createApiRouter(store: IProjectStore = getProjectStore()): Route
         result,
       });
     } catch (err: any) {
-      res.status(500).json({ error: 'Synchronization failed', message: err.message });
+      handleServerError(res, 500, 'Synchronization failed', err);
     }
   });
 
@@ -262,7 +265,7 @@ export function createApiRouter(store: IProjectStore = getProjectStore()): Route
 
       res.status(201).json(project);
     } catch (err: any) {
-      res.status(500).json({ error: 'Failed to create project', message: err.message });
+      handleServerError(res, 500, 'Failed to create project', err);
     }
   });
 
@@ -273,6 +276,30 @@ export function createApiRouter(store: IProjectStore = getProjectStore()): Route
     try {
       const { id } = req.params;
       const updates = req.body;
+      const allowedFields = new Set([
+        'custom_title',
+        'custom_description',
+        'custom_technologies',
+        'custom_highlights',
+        'demo_url',
+        'github_url',
+        'thumbnail_url',
+        'is_published',
+        'is_visible',
+        'is_featured',
+        'display_order',
+      ]);
+
+      if (!updates || typeof updates !== 'object' || Array.isArray(updates)) {
+        res.status(400).json({ error: 'Request body must be an object.' });
+        return;
+      }
+
+      const unexpectedFields = Object.keys(updates).filter(field => !allowedFields.has(field));
+      if (unexpectedFields.length > 0) {
+        res.status(400).json({ error: 'Request contains unsupported project fields.' });
+        return;
+      }
 
       // Validate URL fields if provided
       if (updates.demo_url && typeof updates.demo_url === 'string') {
@@ -292,7 +319,7 @@ export function createApiRouter(store: IProjectStore = getProjectStore()): Route
 
       res.json(updated);
     } catch (err: any) {
-      res.status(500).json({ error: 'Failed to update project', message: err.message });
+      handleServerError(res, 500, 'Failed to update project', err);
     }
   });
 
@@ -314,7 +341,7 @@ export function createApiRouter(store: IProjectStore = getProjectStore()): Route
         project: updated,
       });
     } catch (err: any) {
-      res.status(500).json({ error: 'Approval failed', message: err.message });
+      handleServerError(res, 500, 'Approval failed', err);
     }
   });
 
@@ -339,7 +366,7 @@ export function createApiRouter(store: IProjectStore = getProjectStore()): Route
         project: updated,
       });
     } catch (err: any) {
-      res.status(500).json({ error: 'Rejection failed', message: err.message });
+      handleServerError(res, 500, 'Rejection failed', err);
     }
   });
 
@@ -373,7 +400,7 @@ export function createApiRouter(store: IProjectStore = getProjectStore()): Route
         project: updated,
       });
     } catch (err: any) {
-      res.status(500).json({ error: 'Publish failed', message: err.message });
+      handleServerError(res, 500, 'Publish failed', err);
     }
   });
 
@@ -394,7 +421,7 @@ export function createApiRouter(store: IProjectStore = getProjectStore()): Route
         project: updated,
       });
     } catch (err: any) {
-      res.status(500).json({ error: 'Unpublish failed', message: err.message });
+      handleServerError(res, 500, 'Unpublish failed', err);
     }
   });
 
@@ -415,7 +442,7 @@ export function createApiRouter(store: IProjectStore = getProjectStore()): Route
 
       res.json({ success: true, message: 'Projects reordered successfully.' });
     } catch (err: any) {
-      res.status(500).json({ error: 'Reorder failed', message: err.message });
+      handleServerError(res, 500, 'Reorder failed', err);
     }
   });
 
@@ -432,7 +459,7 @@ export function createApiRouter(store: IProjectStore = getProjectStore()): Route
       }
       res.json({ success: true, message: 'Project removed.' });
     } catch (err: any) {
-      res.status(500).json({ error: 'Delete failed', message: err.message });
+      handleServerError(res, 500, 'Delete failed', err);
     }
   });
 

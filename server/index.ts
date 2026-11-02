@@ -9,13 +9,14 @@ export function createApp() {
 
   // CORS configuration
   app.use(cors({
-    origin: '*',
+    origin: config.corsOrigin || (config.isDev ? '*' : false),
     methods: ['GET', 'POST', 'PATCH', 'PUT', 'DELETE', 'OPTIONS'],
     allowedHeaders: ['Content-Type', 'Authorization', 'X-Hub-Signature-256', 'X-GitHub-Delivery', 'X-GitHub-Event'],
   }));
 
   // JSON Body parser with raw body buffer capture for webhook signature verification
   app.use(express.json({
+    limit: '1mb',
     verify: (req: any, _res, buf) => {
       req.rawBody = buf;
     },

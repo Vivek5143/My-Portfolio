@@ -41,8 +41,12 @@ import {
   Building2,
   Trophy
 } from 'lucide-react';
+import { Project } from './types';
 import { PROJECTS, EXPERIENCES, SKILLS } from './constants';
 import { SpotlightCard } from './components/SpotlightCard';
+import AdminDashboard from './admin/AdminDashboard';
+import { DynamicProjectWidget } from './components/DynamicProjectWidget';
+import { apiFetch } from './lib/api';
 
 const SectionHeader = ({ title, subtitle }: { title: string; subtitle?: string }) => (
   <div className="mb-12">
@@ -69,9 +73,48 @@ const SectionHeader = ({ title, subtitle }: { title: string; subtitle?: string }
 );
 
 export default function App() {
+  const [isAdmin, setIsAdmin] = useState(() => {
+    if (typeof window !== 'undefined') {
+      return window.location.pathname === '/admin' || window.location.hash === '#admin';
+    }
+    return false;
+  });
+  const [projectsList, setProjectsList] = useState<Project[]>(PROJECTS);
   const [activeSection, setActiveSection] = useState('hero');
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+
+  // Sync client route for /admin and #admin
+  useEffect(() => {
+    const checkRoute = () => {
+      const isNowAdmin = window.location.pathname === '/admin' || window.location.hash === '#admin';
+      setIsAdmin(isNowAdmin);
+    };
+    window.addEventListener('popstate', checkRoute);
+    window.addEventListener('hashchange', checkRoute);
+    return () => {
+      window.removeEventListener('popstate', checkRoute);
+      window.removeEventListener('hashchange', checkRoute);
+    };
+  }, []);
+
+  // Fetch approved published projects with automatic fallback to static constants
+  useEffect(() => {
+    apiFetch('/api/projects')
+      .then(res => {
+        if (!res.ok) throw new Error('API unavailable');
+        return res.json();
+      })
+      .then((data: Project[]) => {
+        if (Array.isArray(data) && data.length > 0) {
+          setProjectsList(data);
+        }
+      })
+      .catch(err => {
+        // Safe fallback without disrupting user experience
+        console.log('Using static projects dataset fallback:', err.message);
+      });
+  }, []);
 
   // Track mouse movement for luxury hover portal glow
   useEffect(() => {
@@ -81,6 +124,18 @@ export default function App() {
     window.addEventListener('mousemove', handleMouseMove);
     return () => window.removeEventListener('mousemove', handleMouseMove);
   }, []);
+
+  if (isAdmin) {
+    return (
+      <AdminDashboard
+        onExit={() => {
+          window.history.pushState(null, '', '/');
+          window.location.hash = '';
+          setIsAdmin(false);
+        }}
+      />
+    );
+  }
 
   return (
     <div className="relative min-h-screen bg-[#050816] text-[#e2e8f0] overflow-x-hidden font-sans selection:bg-[#7C3AED]/30 selection:text-white">
@@ -127,7 +182,18 @@ export default function App() {
             </a>
           </div>
 
-          <div className="hidden md:flex items-center gap-4">
+          <div className="hidden md:flex items-center gap-3">
+            <button
+              onClick={() => {
+                window.history.pushState(null, '', '/admin');
+                setIsAdmin(true);
+              }}
+              className="px-3 py-1.5 rounded-full border border-white/10 text-xs font-mono text-gray-400 hover:text-white hover:border-[#7C3AED]/40 hover:bg-[#7C3AED]/10 transition-all flex items-center gap-1.5 cursor-pointer"
+              title="Admin Command Center"
+            >
+              <Lock size={12} />
+              <span>Admin</span>
+            </button>
             <a
               href="mailto:vivekdalvi5143@gmail.com"
               className="px-5 py-2 rounded-full border border-white/10 text-sm hover:border-[#7C3AED]/30 hover:bg-[#7C3AED]/10 text-slate-200 transition-all font-medium"
@@ -159,6 +225,16 @@ export default function App() {
             <a href="#projects" onClick={() => setMobileMenuOpen(false)} className="text-xl text-gray-300 hover:text-[#7C3AED]">Selected Works</a>
             <a href="#experience" onClick={() => setMobileMenuOpen(false)} className="text-xl text-gray-300 hover:text-[#7C3AED]">Experience</a>
             <a href="#github-stats" onClick={() => setMobileMenuOpen(false)} className="text-xl text-gray-300 hover:text-[#7C3AED]">Activity</a>
+            <button
+              onClick={() => {
+                setMobileMenuOpen(false);
+                window.history.pushState(null, '', '/admin');
+                setIsAdmin(true);
+              }}
+              className="text-left text-sm font-mono text-gray-400 hover:text-white flex items-center gap-2 py-2"
+            >
+              <Lock size={14} /> Admin Command Center
+            </button>
             <a
               href="mailto:vivekdalvi5143@gmail.com"
               className="py-3 text-center rounded-xl bg-gradient-to-r from-[#7C3AED] to-[#3B82F6] text-white font-semibold"
@@ -598,7 +674,7 @@ export default function App() {
           <SectionHeader title="Selected Works" subtitle="Operational Pipelines" />
 
           <div className="space-y-24">
-            {PROJECTS.map((project, idx) => {
+            {projectsList.map((project, idx) => {
               const isEven = idx % 2 === 0;
               return (
                 <div
@@ -699,6 +775,11 @@ export default function App() {
                       {project.title === 'Multi-Agent Platform' && <MultiAgentWidget />}
                       {project.title === 'Daily-Work-Logger' && <WorkLoggerWidget />}
                       {project.title === 'Interview Assistant' && <InterviewAssistantWidget />}
+
+                      {/* Dynamic Simulation Widget for Newly Discovered & Approved GitHub Projects */}
+                      {!['AtlasAI', 'AI Sports Quiz Agent', 'CampusPal', 'EduDiff', 'TransactAI', 'InstaClaim', 'Multi-Agent Platform', 'Daily-Work-Logger', 'Interview Assistant'].includes(project.title) && (
+                        <DynamicProjectWidget project={project} />
+                      )}
 
                     </SpotlightCard>
                   </div>
@@ -894,6 +975,17 @@ export default function App() {
           <div className="text-gray-500 text-xs font-mono space-y-2 md:text-right">
             <p>© 2026 Vivek Dalvi. All Rights Reserved.</p>
             <p>Designed and built with React, TypeScript, and modern AI technologies.</p>
+            <div>
+              <button
+                onClick={() => {
+                  window.history.pushState(null, '', '/admin');
+                  setIsAdmin(true);
+                }}
+                className="text-gray-500 hover:text-gray-300 text-xs font-mono inline-flex items-center gap-1 hover:underline cursor-pointer"
+              >
+                <Lock size={10} /> Admin Command Center
+              </button>
+            </div>
           </div>
         </div>
       </footer>

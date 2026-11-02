@@ -138,6 +138,11 @@ export function createApiRouter(store: IProjectStore = getProjectStore()): Route
       const result = await processWebhookEvent(event, deliveryId, req.body, store);
       res.json(result);
     } catch (err: any) {
+      console.error('Webhook processing error', {
+        event,
+        deliveryId,
+        message: err.message,
+      });
       res.status(500).json({ error: 'Webhook processing error', message: err.message });
     }
   });

@@ -3,7 +3,7 @@ import path from 'path';
 import crypto from 'crypto';
 import { createClient, SupabaseClient } from '@supabase/supabase-js';
 import { ManagedProject, Project, ApprovalStatus, AdminStats } from '../src/types';
-import { config, isSupabaseConfigured } from './config';
+import { config, isSupabaseConfigured, isSupabaseServiceRoleKey } from './config';
 import { getInitialSeedProjects } from './seed';
 
 export interface ProjectFilter {
@@ -283,12 +283,23 @@ export class SupabaseProjectStore implements IProjectStore {
   private client: SupabaseClient;
 
   constructor(url: string, serviceRoleKey: string) {
+    if (!isSupabaseServiceRoleKey(serviceRoleKey)) {
+      throw new Error('SUPABASE_SERVICE_ROLE_KEY must be a Supabase service_role JWT');
+    }
+
     this.client = createClient(url, serviceRoleKey, {
       auth: {
         persistSession: false,
         autoRefreshToken: false,
+        detectSessionInUrl: false,
+      },
+      global: {
+        headers: {
+          Authorization: `Bearer ${serviceRoleKey}`,
+        },
       },
     });
+    console.log('Supabase admin client initialized with service_role credential');
   }
 
   async init(): Promise<void> {
@@ -404,6 +415,10 @@ export class SupabaseProjectStore implements IProjectStore {
   async recordWebhookDelivery(deliveryId: string, event: string): Promise<boolean> {
     const { error } = await this.client.from('webhook_deliveries').insert({ delivery_id: deliveryId, event });
     if (error) {
+      console.error('Supabase webhook delivery persistence failed', {
+        code: error.code,
+        message: error.message,
+      });
       if (error.code === '23505') return false; // Unique violation -> already processed
       throw new Error(`Supabase recordWebhookDelivery error: ${error.message}`);
     }

@@ -121,3 +121,9 @@ CREATE POLICY "Service role manages webhook deliveries"
     TO service_role
     USING (true)
     WITH CHECK (true);
+
+-- 8. Explicit grants: only the server-side service role may manage webhook deliveries.
+-- The public client can read eligible projects, but cannot access webhook delivery state.
+GRANT SELECT ON public.projects TO anon, authenticated;
+REVOKE ALL ON public.webhook_deliveries FROM anon, authenticated;
+GRANT ALL ON public.projects, public.webhook_deliveries TO service_role;

@@ -37,6 +37,21 @@ export function isSupabaseConfigured(): boolean {
   return Boolean(config.supabaseUrl && config.supabaseServiceRoleKey);
 }
 
+export function isSupabaseServiceRoleKey(key: string | undefined = config.supabaseServiceRoleKey): boolean {
+  if (!key) return false;
+  if (key.startsWith('sb_secret_')) return true;
+
+  const parts = key.split('.');
+  if (parts.length !== 3) return false;
+
+  try {
+    const payload = JSON.parse(Buffer.from(parts[1], 'base64url').toString('utf8')) as { role?: unknown };
+    return payload.role === 'service_role';
+  } catch {
+    return false;
+  }
+}
+
 export function isGitHubTokenConfigured(): boolean {
   return Boolean(config.githubToken);
 }

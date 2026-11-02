@@ -106,7 +106,9 @@ export default function App() {
         return res.json();
       })
       .then((data: Project[]) => {
-        if (Array.isArray(data) && data.length > 0) {
+        // A successful empty response is authoritative: unpublished projects
+        // must not remain visible through the static fallback.
+        if (Array.isArray(data)) {
           setProjectsList(data);
         }
       })
@@ -764,6 +766,13 @@ export default function App() {
                                         'rgba(249, 115, 22, 0.25)'
                       }
                     >
+                      {project.imageUrl && (
+                        <img
+                          src={project.imageUrl}
+                          alt={`${project.title} project preview`}
+                          className="absolute inset-0 w-full h-full object-cover opacity-20 rounded-2xl pointer-events-none"
+                        />
+                      )}
 
                       {/* Sub-Widget: Dynamic Interactive Simulations */}
                       {project.title === 'AtlasAI' && <AtlasAIWidget />}

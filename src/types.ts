@@ -7,6 +7,12 @@ export interface Project {
   highlights: string[];
   link?: string;
   demoLink?: string;
+  websiteUrl?: string;
+  documentationUrl?: string;
+  imageUrl?: string;
+  screenshots?: string[];
+  category?: string | null;
+  projectType?: string | null;
   // Extended fields for synced & managed projects
   id?: string;
   githubId?: number | null;
@@ -46,9 +52,18 @@ export interface ManagedProject {
   // Curated / Manual overrides
   custom_title?: string | null;
   custom_description?: string | null;
+  full_description?: string | null;
   custom_technologies?: string[] | null;
   custom_highlights?: string[] | null;
+  category?: string | null;
+  project_type?: string | null;
+  programming_languages?: string[] | null;
+  frameworks?: string[] | null;
+  ai_tools?: string[] | null;
   demo_url?: string | null;
+  website_url?: string | null;
+  documentation_url?: string | null;
+  screenshots?: string[] | null;
   thumbnail_url?: string | null;
 
   // Management controls
@@ -99,4 +114,3 @@ export interface SkillCategory {
   title: string;
   skills: string[];
 }
-

@@ -1,0 +1,10 @@
+ALTER TABLE public.projects
+    ADD COLUMN IF NOT EXISTS full_description TEXT,
+    ADD COLUMN IF NOT EXISTS category TEXT,
+    ADD COLUMN IF NOT EXISTS project_type TEXT,
+    ADD COLUMN IF NOT EXISTS programming_languages TEXT[] NOT NULL DEFAULT '{}',
+    ADD COLUMN IF NOT EXISTS frameworks TEXT[] NOT NULL DEFAULT '{}',
+    ADD COLUMN IF NOT EXISTS ai_tools TEXT[] NOT NULL DEFAULT '{}',
+    ADD COLUMN IF NOT EXISTS website_url TEXT,
+    ADD COLUMN IF NOT EXISTS documentation_url TEXT,
+    ADD COLUMN IF NOT EXISTS screenshots TEXT[] NOT NULL DEFAULT '{}';

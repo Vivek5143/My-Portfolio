@@ -34,9 +34,18 @@ CREATE TABLE IF NOT EXISTS public.projects (
     -- Curated & Manual overrides (Preserved across synchronizations)
     custom_title TEXT,
     custom_description TEXT,
+    full_description TEXT,
     custom_technologies TEXT[],
     custom_highlights TEXT[],
+    category TEXT,
+    project_type TEXT,
+    programming_languages TEXT[] NOT NULL DEFAULT '{}',
+    frameworks TEXT[] NOT NULL DEFAULT '{}',
+    ai_tools TEXT[] NOT NULL DEFAULT '{}',
     demo_url TEXT,
+    website_url TEXT,
+    documentation_url TEXT,
+    screenshots TEXT[] NOT NULL DEFAULT '{}',
     thumbnail_url TEXT,
 
     -- Portfolio lifecycle and publication controls

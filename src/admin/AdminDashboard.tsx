@@ -45,7 +45,7 @@ export default function AdminDashboard({ onExit }: AdminDashboardProps) {
   // Dashboard Data State
   const [projects, setProjects] = useState<ManagedProject[]>([]);
   const [stats, setStats] = useState<AdminStats | null>(null);
-  const [activeTab, setActiveTab] = useState<'pending' | 'all' | 'published' | 'featured' | 'drafts'>('pending');
+  const [activeTab, setActiveTab] = useState<'pending' | 'all' | 'published' | 'featured' | 'drafts' | 'private'>('pending');
   const [searchQuery, setSearchQuery] = useState('');
   const [isLoading, setIsLoading] = useState(true);
   const [isSyncing, setIsSyncing] = useState(false);
@@ -64,12 +64,24 @@ export default function AdminDashboard({ onExit }: AdminDashboardProps) {
   // Form State for Edit/Create
   const [formTitle, setFormTitle] = useState('');
   const [formDescription, setFormDescription] = useState('');
+  const [formFullDescription, setFormFullDescription] = useState('');
+  const [formCategory, setFormCategory] = useState('');
+  const [formProjectType, setFormProjectType] = useState('');
   const [formTechnologies, setFormTechnologies] = useState('');
+  const [formLanguages, setFormLanguages] = useState('');
+  const [formFrameworks, setFormFrameworks] = useState('');
+  const [formAiTools, setFormAiTools] = useState('');
   const [formHighlights, setFormHighlights] = useState<string[]>(['']);
   const [formDemoUrl, setFormDemoUrl] = useState('');
   const [formGithubUrl, setFormGithubUrl] = useState('');
+  const [formWebsiteUrl, setFormWebsiteUrl] = useState('');
+  const [formDocumentationUrl, setFormDocumentationUrl] = useState('');
+  const [formThumbnailUrl, setFormThumbnailUrl] = useState('');
+  const [formScreenshots, setFormScreenshots] = useState('');
   const [formIsVisible, setFormIsVisible] = useState(true);
   const [formIsPublished, setFormIsPublished] = useState(true);
+  const [formIsPrivate, setFormIsPrivate] = useState(false);
+  const [formIsApproved, setFormIsApproved] = useState(true);
   const [formIsFeatured, setFormIsFeatured] = useState(false);
   const [formOrder, setFormOrder] = useState(50);
 
@@ -315,7 +327,13 @@ export default function AdminDashboard({ onExit }: AdminDashboardProps) {
     setEditingProject(project);
     setFormTitle(project.custom_title || project.repo_name);
     setFormDescription(project.custom_description || '');
+    setFormFullDescription(project.full_description || '');
+    setFormCategory(project.category || '');
+    setFormProjectType(project.project_type || '');
     setFormTechnologies((project.custom_technologies || project.topics || []).join(', '));
+    setFormLanguages((project.programming_languages || []).join(', '));
+    setFormFrameworks((project.frameworks || []).join(', '));
+    setFormAiTools((project.ai_tools || []).join(', '));
     setFormHighlights(
       project.custom_highlights && project.custom_highlights.length > 0
         ? [...project.custom_highlights]
@@ -323,8 +341,14 @@ export default function AdminDashboard({ onExit }: AdminDashboardProps) {
     );
     setFormDemoUrl(project.demo_url || '');
     setFormGithubUrl(project.github_url || '');
+    setFormWebsiteUrl(project.website_url || '');
+    setFormDocumentationUrl(project.documentation_url || '');
+    setFormThumbnailUrl(project.thumbnail_url || '');
+    setFormScreenshots((project.screenshots || []).join(', '));
     setFormIsVisible(project.is_visible);
     setFormIsPublished(project.is_published);
+    setFormIsPrivate(project.is_private);
+    setFormIsApproved(project.approval_status === 'approved');
     setFormIsFeatured(project.is_featured);
     setFormOrder(project.display_order);
   };
@@ -334,12 +358,24 @@ export default function AdminDashboard({ onExit }: AdminDashboardProps) {
     setIsCreatingManual(true);
     setFormTitle('');
     setFormDescription('');
+    setFormFullDescription('');
+    setFormCategory('');
+    setFormProjectType('');
     setFormTechnologies('React, TypeScript, FastAPI');
+    setFormLanguages('TypeScript');
+    setFormFrameworks('React');
+    setFormAiTools('');
     setFormHighlights(['Production system architecture', 'Engineered custom RAG pipeline']);
     setFormDemoUrl('');
     setFormGithubUrl('');
+    setFormWebsiteUrl('');
+    setFormDocumentationUrl('');
+    setFormThumbnailUrl('');
+    setFormScreenshots('');
     setFormIsVisible(true);
     setFormIsPublished(true);
+    setFormIsPrivate(false);
+    setFormIsApproved(true);
     setFormIsFeatured(false);
     setFormOrder(50);
   };
@@ -356,6 +392,13 @@ export default function AdminDashboard({ onExit }: AdminDashboardProps) {
       const highlightsArray = formHighlights
         .map(h => h.trim())
         .filter(Boolean);
+      const list = (value: string) => value.split(',').map(item => item.trim()).filter(Boolean);
+      if (formIsPrivate && (formIsPublished || formIsVisible)) {
+        throw new Error('Private projects cannot be published or visible.');
+      }
+      if (!formIsApproved && formIsPublished) {
+        throw new Error('Only approved projects can be published.');
+      }
 
       if (editingProject) {
         await apiCall(`/api/admin/projects/${editingProject.id}`, {
@@ -363,10 +406,22 @@ export default function AdminDashboard({ onExit }: AdminDashboardProps) {
           body: JSON.stringify({
             custom_title: formTitle,
             custom_description: formDescription,
+            full_description: formFullDescription.trim() || null,
+            category: formCategory.trim() || null,
+            project_type: formProjectType.trim() || null,
             custom_technologies: techArray,
             custom_highlights: highlightsArray,
+            programming_languages: list(formLanguages),
+            frameworks: list(formFrameworks),
+            ai_tools: list(formAiTools),
             demo_url: formDemoUrl.trim() || null,
             github_url: formGithubUrl.trim() || editingProject.github_url,
+            website_url: formWebsiteUrl.trim() || null,
+            documentation_url: formDocumentationUrl.trim() || null,
+            thumbnail_url: formThumbnailUrl.trim() || null,
+            screenshots: list(formScreenshots),
+            approval_status: formIsApproved ? 'approved' : 'pending',
+            is_private: formIsPrivate,
             is_visible: formIsVisible,
             is_published: formIsPublished,
             is_featured: formIsFeatured,
@@ -381,13 +436,24 @@ export default function AdminDashboard({ onExit }: AdminDashboardProps) {
           body: JSON.stringify({
             title: formTitle,
             description: formDescription,
+            full_description: formFullDescription.trim() || null,
+            category: formCategory.trim() || null,
+            project_type: formProjectType.trim() || null,
             technologies: techArray,
             highlights: highlightsArray,
+            programming_languages: list(formLanguages),
+            frameworks: list(formFrameworks),
+            ai_tools: list(formAiTools),
             demo_url: formDemoUrl.trim() || null,
             github_url: formGithubUrl.trim() || '',
+            website_url: formWebsiteUrl.trim() || null,
+            documentation_url: formDocumentationUrl.trim() || null,
+            thumbnail_url: formThumbnailUrl.trim() || null,
+            screenshots: list(formScreenshots),
             is_visible: formIsVisible,
             is_published: formIsPublished,
             is_featured: formIsFeatured,
+            is_private: formIsPrivate,
           }),
         });
         setFeedback({ type: 'success', message: `Created project '${formTitle}'.` });
@@ -413,7 +479,7 @@ export default function AdminDashboard({ onExit }: AdminDashboardProps) {
       return p.approval_status === 'pending';
     }
     if (activeTab === 'published') {
-      return p.approval_status === 'approved' && p.is_published;
+      return p.approval_status === 'approved' && p.is_published && p.is_visible && !p.is_private;
     }
     if (activeTab === 'featured') {
       return p.is_featured;
@@ -421,6 +487,7 @@ export default function AdminDashboard({ onExit }: AdminDashboardProps) {
     if (activeTab === 'drafts') {
       return p.approval_status === 'rejected' || (!p.is_published && p.approval_status === 'approved');
     }
+    if (activeTab === 'private') return p.is_private;
     return true; // 'all'
   });
 
@@ -724,7 +791,7 @@ export default function AdminDashboard({ onExit }: AdminDashboardProps) {
                   : 'text-gray-400 hover:text-white'
               }`}
             >
-              Published ({projects.filter(p => p.approval_status === 'approved' && p.is_published).length})
+              Live ({projects.filter(p => p.approval_status === 'approved' && p.is_published && p.is_visible && !p.is_private).length})
             </button>
 
             <button
@@ -747,6 +814,16 @@ export default function AdminDashboard({ onExit }: AdminDashboardProps) {
               }`}
             >
               Drafts / Rejected
+            </button>
+            <button
+              onClick={() => setActiveTab('private')}
+              className={`px-4 py-2 rounded-xl text-xs font-mono transition-all cursor-pointer shrink-0 ${
+                activeTab === 'private'
+                  ? 'bg-yellow-500/20 text-yellow-300 border border-yellow-500/30 font-semibold'
+                  : 'text-gray-400 hover:text-white'
+              }`}
+            >
+              Private
             </button>
           </div>
 
@@ -849,9 +926,9 @@ export default function AdminDashboard({ onExit }: AdminDashboardProps) {
                       </span>
                     )}
 
-                    {p.is_published ? (
+                    {p.approval_status === 'approved' && p.is_published && p.is_visible && !p.is_private ? (
                       <span className="px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-400 text-[10px] font-mono">
-                        Published
+                        LIVE
                       </span>
                     ) : (
                       <span className="px-2 py-0.5 rounded-full bg-gray-500/10 text-gray-400 text-[10px] font-mono">
@@ -1064,6 +1141,37 @@ export default function AdminDashboard({ onExit }: AdminDashboardProps) {
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                {[
+                  ['Category', formCategory, setFormCategory],
+                  ['Project type', formProjectType, setFormProjectType],
+                  ['Programming languages', formLanguages, setFormLanguages],
+                  ['Frameworks and libraries', formFrameworks, setFormFrameworks],
+                  ['AI/ML models and tools', formAiTools, setFormAiTools],
+                ].map(([label, value, setter]) => (
+                  <div key={label as string}>
+                    <label className="block text-xs font-mono text-gray-400 mb-1 uppercase tracking-wider">{label as string}</label>
+                    <input
+                      type="text"
+                      value={value as string}
+                      onChange={e => (setter as React.Dispatch<React.SetStateAction<string>>)(e.target.value)}
+                      className="w-full px-4 py-2.5 rounded-xl bg-white/5 border border-white/10 text-white text-sm focus:outline-none focus:border-[#7C3AED]"
+                      placeholder="Comma separated"
+                    />
+                  </div>
+                ))}
+              </div>
+
+              <div>
+                <label className="block text-xs font-mono text-gray-400 mb-1 uppercase tracking-wider">Full description</label>
+                <textarea
+                  value={formFullDescription}
+                  onChange={e => setFormFullDescription(e.target.value)}
+                  rows={4}
+                  className="w-full px-4 py-2.5 rounded-xl bg-white/5 border border-white/10 text-white text-sm focus:outline-none focus:border-[#7C3AED]"
+                />
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
                   <label className="block text-xs font-mono text-gray-400 mb-1 uppercase tracking-wider">
                     Technologies (Comma separated)
@@ -1075,6 +1183,28 @@ export default function AdminDashboard({ onExit }: AdminDashboardProps) {
                     className="w-full px-4 py-2.5 rounded-xl bg-white/5 border border-white/10 text-white text-sm focus:outline-none focus:border-[#7C3AED]"
                     placeholder="FastAPI, Python, FAISS, Docker"
                   />
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  {[
+                    ['Project website URL', formWebsiteUrl, setFormWebsiteUrl],
+                    ['Documentation URL', formDocumentationUrl, setFormDocumentationUrl],
+                    ['Thumbnail/image URL', formThumbnailUrl, setFormThumbnailUrl],
+                    ['Screenshot URLs (comma separated)', formScreenshots, setFormScreenshots],
+                  ].map(([label, value, setter]) => (
+                    <div key={label as string}>
+                      <label className="block text-xs font-mono text-gray-400 mb-1 uppercase tracking-wider">{label as string}</label>
+                      <input
+                        type={label === 'Screenshot URLs (comma separated)' ? 'text' : 'url'}
+                        value={value as string}
+                        onChange={e => (setter as React.Dispatch<React.SetStateAction<string>>)(e.target.value)}
+                        className="w-full px-4 py-2.5 rounded-xl bg-white/5 border border-white/10 text-white text-sm focus:outline-none focus:border-[#7C3AED]"
+                      />
+                      {label === 'Thumbnail/image URL' && formThumbnailUrl && (
+                        <img src={formThumbnailUrl} alt="Thumbnail preview" className="mt-2 h-16 w-28 rounded object-cover" />
+                      )}
+                    </div>
+                  ))}
                 </div>
 
                 <div>
@@ -1166,6 +1296,26 @@ export default function AdminDashboard({ onExit }: AdminDashboardProps) {
                     className="accent-[#7C3AED]"
                   />
                   <span>Published</span>
+                </label>
+
+                <label className="flex items-center gap-2 cursor-pointer text-xs font-mono text-gray-300">
+                  <input
+                    type="checkbox"
+                    checked={formIsApproved}
+                    onChange={e => setFormIsApproved(e.target.checked)}
+                    className="accent-[#7C3AED]"
+                  />
+                  <span>Approved</span>
+                </label>
+
+                <label className="flex items-center gap-2 cursor-pointer text-xs font-mono text-gray-300">
+                  <input
+                    type="checkbox"
+                    checked={formIsPrivate}
+                    onChange={e => setFormIsPrivate(e.target.checked)}
+                    className="accent-[#7C3AED]"
+                  />
+                  <span>Private</span>
                 </label>
 
                 <label className="flex items-center gap-2 cursor-pointer text-xs font-mono text-gray-300">

@@ -13,6 +13,13 @@ export interface ProjectFilter {
   featured?: boolean;
 }
 
+export function isPubliclyVisible(project: Pick<ManagedProject, 'approval_status' | 'is_published' | 'is_visible' | 'is_private'>): boolean {
+  return project.approval_status === 'approved'
+    && project.is_published
+    && project.is_visible
+    && !project.is_private;
+}
+
 export interface IProjectStore {
   init(): Promise<void>;
   getAll(filter?: ProjectFilter): Promise<ManagedProject[]>;
@@ -143,10 +150,10 @@ export class FileProjectStore implements IProjectStore {
 
     // Strip private metadata, merge custom overrides with repo data
     return managed
-      .filter(p => !p.is_private)
+      .filter(isPubliclyVisible)
       .map(p => ({
         title: p.custom_title || p.repo_name,
-        description: p.custom_description || (p.readme_content ? p.readme_content.slice(0, 160) + '...' : `Intelligent engineering platform built with ${p.language || 'modern technology'}.`),
+        description: p.full_description || p.custom_description || (p.readme_content ? p.readme_content.slice(0, 160) + '...' : `Intelligent engineering platform built with ${p.language || 'modern technology'}.`),
         technologies: (p.custom_technologies && p.custom_technologies.length > 0)
           ? p.custom_technologies
           : (p.topics && p.topics.length > 0 ? p.topics : [p.language || 'Python']),
@@ -155,6 +162,12 @@ export class FileProjectStore implements IProjectStore {
           : [`Automated architecture on branch ${p.default_branch} with ${p.stars_count} GitHub stars.`],
         link: p.github_url,
         demoLink: p.demo_url || undefined,
+        websiteUrl: p.website_url || undefined,
+        documentationUrl: p.documentation_url || undefined,
+        imageUrl: p.thumbnail_url || undefined,
+        screenshots: p.screenshots || [],
+        category: p.category,
+        projectType: p.project_type,
         id: p.id,
         githubId: p.github_id,
         repoName: p.repo_name,
@@ -351,7 +364,7 @@ export class SupabaseProjectStore implements IProjectStore {
     const managed = (data || []) as ManagedProject[];
     return managed.map(p => ({
       title: p.custom_title || p.repo_name,
-      description: p.custom_description || (p.readme_content ? p.readme_content.slice(0, 160) + '...' : `Intelligent engineering platform built with ${p.language || 'modern technology'}.`),
+      description: p.full_description || p.custom_description || (p.readme_content ? p.readme_content.slice(0, 160) + '...' : `Intelligent engineering platform built with ${p.language || 'modern technology'}.`),
       technologies: (p.custom_technologies && p.custom_technologies.length > 0)
         ? p.custom_technologies
         : (p.topics && p.topics.length > 0 ? p.topics : [p.language || 'Python']),
@@ -360,6 +373,12 @@ export class SupabaseProjectStore implements IProjectStore {
         : [`Automated architecture on branch ${p.default_branch} with ${p.stars_count} GitHub stars.`],
       link: p.github_url,
       demoLink: p.demo_url || undefined,
+      websiteUrl: p.website_url || undefined,
+      documentationUrl: p.documentation_url || undefined,
+      imageUrl: p.thumbnail_url || undefined,
+      screenshots: p.screenshots || [],
+      category: p.category,
+      projectType: p.project_type,
       id: p.id,
       githubId: p.github_id,
       repoName: p.repo_name,

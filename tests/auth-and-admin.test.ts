@@ -170,4 +170,60 @@ describe('Admin Authentication, Authorization & Lifecycle Workflow', () => {
     expect(res.body.project.is_published).toBe(false);
     expect(res.body.project.is_visible).toBe(false);
   });
+
+  it('persists complete project edits and keeps private projects out of public results', async () => {
+    const project = await store.create({
+      github_id: 998877,
+      repo_name: 'Editable-Project',
+      repo_full_name: 'Vivek5143/Editable-Project',
+      github_url: 'https://github.com/Vivek5143/Editable-Project',
+      default_branch: 'main',
+      stars_count: 0,
+      forks_count: 0,
+      open_issues_count: 0,
+      language: 'TypeScript',
+      topics: [],
+      readme_content: null,
+      is_private: false,
+      is_fork: false,
+      is_archived: false,
+      approval_status: 'approved',
+      is_published: false,
+      is_visible: false,
+      is_featured: false,
+      display_order: 1,
+      last_synced_at: null,
+    });
+
+    const edit = await request(app)
+      .patch(`/api/admin/projects/${project.id}`)
+      .set('Authorization', 'Bearer ' + adminToken)
+      .send({
+        custom_title: 'Edited Project',
+        custom_description: 'Updated short description',
+        full_description: 'Updated full description',
+        custom_technologies: ['React', 'Supabase'],
+        website_url: 'https://example.com',
+        screenshots: ['https://example.com/screenshot.png'],
+        is_featured: true,
+        is_published: true,
+        is_visible: true,
+      });
+
+    expect(edit.status).toBe(200);
+    expect(edit.body.custom_title).toBe('Edited Project');
+    expect(edit.body.is_featured).toBe(true);
+
+    let publicRes = await request(app).get('/api/projects');
+    expect(publicRes.body.some((item: any) => item.title === 'Edited Project')).toBe(true);
+
+    const makePrivate = await request(app)
+      .patch(`/api/admin/projects/${project.id}`)
+      .set('Authorization', 'Bearer ' + adminToken)
+      .send({ is_private: true, is_published: false, is_visible: false });
+
+    expect(makePrivate.status).toBe(200);
+    publicRes = await request(app).get('/api/projects');
+    expect(publicRes.body.some((item: any) => item.title === 'Edited Project')).toBe(false);
+  });
 });

@@ -211,18 +211,41 @@ export function createApiRouter(store: IProjectStore = getProjectStore()): Route
       const {
         title,
         description,
+        full_description,
+        category,
+        project_type,
         technologies,
         highlights,
+        programming_languages,
+        frameworks,
+        ai_tools,
         demo_url,
         github_url,
+        website_url,
+        documentation_url,
+        screenshots,
         thumbnail_url,
         is_published,
         is_visible,
         is_featured,
+        is_private,
       } = req.body;
 
       if (!title) {
         res.status(400).json({ error: 'Title is required for manual project.' });
+        return;
+      }
+      const createUrls = [demo_url, github_url, website_url, documentation_url, thumbnail_url].filter(Boolean);
+      if (createUrls.some((value: unknown) => typeof value !== 'string' || !/^https?:\/\//i.test(value))) {
+        res.status(400).json({ error: 'Project links must use http or https URLs.' });
+        return;
+      }
+      if (Array.isArray(screenshots) && screenshots.some((value: unknown) => typeof value !== 'string' || !/^https?:\/\//i.test(value))) {
+        res.status(400).json({ error: 'Screenshot links must use http or https URLs.' });
+        return;
+      }
+      if ((is_private && (is_published || is_visible)) || (is_published && !is_visible)) {
+        res.status(400).json({ error: 'Private projects cannot be published, and published projects must be visible.' });
         return;
       }
 
@@ -239,7 +262,7 @@ export function createApiRouter(store: IProjectStore = getProjectStore()): Route
         language: technologies && technologies[0] ? technologies[0] : 'Engineering',
         topics: technologies || [],
         readme_content: null,
-        is_private: false,
+        is_private: Boolean(is_private),
         is_fork: false,
         is_archived: false,
         github_created_at: null,
@@ -248,9 +271,18 @@ export function createApiRouter(store: IProjectStore = getProjectStore()): Route
 
         custom_title: title,
         custom_description: description || '',
+        full_description: full_description || null,
         custom_technologies: technologies || [],
         custom_highlights: highlights || [],
+        category: category || null,
+        project_type: project_type || null,
+        programming_languages: programming_languages || [],
+        frameworks: frameworks || [],
+        ai_tools: ai_tools || [],
         demo_url: demo_url || null,
+        website_url: website_url || null,
+        documentation_url: documentation_url || null,
+        screenshots: screenshots || [],
         thumbnail_url: thumbnail_url || null,
 
         approval_status: 'approved',
@@ -279,11 +311,22 @@ export function createApiRouter(store: IProjectStore = getProjectStore()): Route
       const allowedFields = new Set([
         'custom_title',
         'custom_description',
+        'full_description',
         'custom_technologies',
         'custom_highlights',
+        'category',
+        'project_type',
+        'programming_languages',
+        'frameworks',
+        'ai_tools',
         'demo_url',
         'github_url',
+        'website_url',
+        'documentation_url',
+        'screenshots',
         'thumbnail_url',
+        'approval_status',
+        'is_private',
         'is_published',
         'is_visible',
         'is_featured',
@@ -301,21 +344,61 @@ export function createApiRouter(store: IProjectStore = getProjectStore()): Route
         return;
       }
 
-      // Validate URL fields if provided
-      if (updates.demo_url && typeof updates.demo_url === 'string') {
-        try {
-          new URL(updates.demo_url);
-        } catch {
-          res.status(400).json({ error: 'Invalid demo_url format. Must be a valid URL.' });
+      const urlFields = ['demo_url', 'github_url', 'website_url', 'documentation_url', 'thumbnail_url'];
+      for (const field of urlFields) {
+        const value = updates[field];
+        if (value !== null && value !== undefined) {
+          if (typeof value !== 'string') {
+            res.status(400).json({ error: `${field} must be a URL or null.` });
+            return;
+          }
+          try {
+            const parsed = new URL(value);
+            if (!['http:', 'https:'].includes(parsed.protocol)) throw new Error('Unsupported protocol');
+          } catch {
+            res.status(400).json({ error: `Invalid ${field} format.` });
+            return;
+          }
+        }
+      }
+
+      const arrayFields = ['custom_technologies', 'custom_highlights', 'programming_languages', 'frameworks', 'ai_tools', 'screenshots'];
+      for (const field of arrayFields) {
+        if (updates[field] !== undefined && (!Array.isArray(updates[field]) || updates[field].some((item: unknown) => typeof item !== 'string'))) {
+          res.status(400).json({ error: `${field} must be an array of strings.` });
+          return;
+        }
+        if (updates.screenshots?.some((value: string) => !/^https?:\/\//i.test(value))) {
+          res.status(400).json({ error: 'Screenshot links must use http or https URLs.' });
           return;
         }
       }
 
-      const updated = await store.update(id, updates);
-      if (!updated) {
+      const existing = await store.getById(id);
+      if (!existing) {
         res.status(404).json({ error: 'Project not found.' });
         return;
       }
+
+      const next = { ...existing, ...updates };
+      if (next.approval_status !== 'approved' && next.is_published) {
+        res.status(400).json({ error: 'Only approved projects can be published.' });
+        return;
+      }
+      if (!next.is_published && next.is_visible) {
+        res.status(400).json({ error: 'A project must be published before it can be visible.' });
+        return;
+      }
+      if (next.is_private && (next.is_published || next.is_visible)) {
+        res.status(400).json({ error: 'Private projects cannot be published or visible.' });
+        return;
+      }
+      if (next.approval_status === 'rejected') {
+        updates.is_published = false;
+        updates.is_visible = false;
+      }
+
+      const updated = await store.update(id, updates);
 
       res.json(updated);
     } catch (err: any) {
@@ -410,7 +493,7 @@ export function createApiRouter(store: IProjectStore = getProjectStore()): Route
   router.post('/admin/projects/:id/unpublish', requireAdminAuth, async (req: Request, res: Response) => {
     try {
       const { id } = req.params;
-      const updated = await store.update(id, { is_published: false });
+      const updated = await store.update(id, { is_published: false, is_visible: false });
       if (!updated) {
         res.status(404).json({ error: 'Project not found.' });
         return;
